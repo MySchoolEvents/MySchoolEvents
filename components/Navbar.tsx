@@ -15,20 +15,20 @@ function CustomNavbar({ selectedTab }: Props) {
       <Stack spacing={60} w="100%" mr="xs">
         <UnstyledButton>
           <Group position="center">
-            <IconHomeStar color={selectedTab == "home" ? "#228be6" : "gray"} fontWeight={3} />
+            <IconHomeStar color={selectedTab == "home" ? "#228be6" : "gray"} fontWeight={selectedTab == "home" ? "#228be6" : "gray"} />
             <Text color={selectedTab == "home" ? "#228be6" : "gray"} >Home</Text>
           </Group>
         </UnstyledButton>
         <UnstyledButton>
           <Group position="center">
-            <IconBooks color="gray" fontWeight={3} />
-            <Text color="gray">Courses</Text>
+            <IconBooks color={selectedTab == "courses" ? "#228be6" : "gray"} fontWeight={selectedTab == "courses" ? "#228be6" : "gray"} />
+            <Text color={selectedTab == "courses" ? "#228be6" : "gray"} >Courses</Text>
           </Group>
         </UnstyledButton>
         <UnstyledButton>
           <Group position='center'>
-            <IconSettings color="gray" fontWeight={3} />
-            <Text color="gray">Settings</Text>
+            <IconSettings color={selectedTab == "settings" ? "#228be6" : "gray"} fontWeight={selectedTab == "settings" ? "#228be6" : "gray"} />
+            <Text color={selectedTab == "settings" ? "#228be6" : "gray"} >Settings</Text>
           </Group>
         </UnstyledButton>
       </Stack>
