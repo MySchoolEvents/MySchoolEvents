@@ -34,7 +34,6 @@ function CustomNavbar({ selectedTab }: Props) {
           </UnstyledButton>
         </Link>
 
-
         <Link href={`/settings`}>
           <UnstyledButton>
             <Group position='center'>
