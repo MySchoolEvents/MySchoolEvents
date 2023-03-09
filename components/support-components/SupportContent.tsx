@@ -1,16 +1,14 @@
 import { IconMessages, IconHelp } from "@tabler/icons";
-import {
-	Stack,
-	Group,
-	Title,
-	Tabs,
-	Space,
-} from "@mantine/core";
+import { Stack, Group, Title, Tabs, Space, Text } from "@mantine/core";
 import { getCurrentDateOrdinalSuffixes } from "@/helpers/utils";
-import FAQ from "./faq";
-import Chat from "./chat";
+import FAQ from "./FAQ";
+import Chat from "./Chat";
 
-function SupportContent() {
+type SupportContentProps = {
+	messages: { isAssistant: boolean; content: string; timestamp: Date }[];
+};
+
+function SupportContent({ messages }: SupportContentProps) {
 	return (
 		<Stack m="md">
 			<Group position="apart">
@@ -38,18 +36,22 @@ function SupportContent() {
 
 			<Tabs defaultValue="chat" radius={"md"} variant="default">
 				<Tabs.List grow>
-					<Tabs.Tab value="chat" icon={<IconMessages size="0.8rem" />}>
-						AI Chat
+					<Tabs.Tab value="chat" icon={<IconMessages size="1.2rem" />}>
+						<Text weight="bold" size="md">
+							AI Chat
+						</Text>
 					</Tabs.Tab>
-					<Tabs.Tab value="faq" icon={<IconHelp size="0.8rem" />}>
-						FAQ
+					<Tabs.Tab value="faq" icon={<IconHelp size="1.2rem" />}>
+						<Text weight="bold" size="md">
+							FAQ
+						</Text>
 					</Tabs.Tab>
 				</Tabs.List>
 
 				<Space h="sm" />
 
 				<Tabs.Panel value="chat" pt="xs">
-					<Chat />
+					<Chat messages={messages} />
 				</Tabs.Panel>
 
 				<Tabs.Panel value="faq" pt="xs">

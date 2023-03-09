@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, Group, Stack, useMantineTheme, Paper } from "@mantine/core";
-import { courseIcons, courseIconsModal } from "@/helpers/icons";
+import { courseIconsWhite, courseIconsBlack } from "@/helpers/icons";
 import { chooseColorRecursively, getCourseBackgroundColors } from "@/helpers/colors";
 
 type CourseCardProps = {
@@ -31,14 +31,14 @@ function CourseCard({
 				setCurrentCourseProperties({
 					title: course.courseName,
 					teacher: course.courseTeacher,
-					icon: courseIconsModal[course.previewIconIndex].icon,
+					icon: courseIconsBlack[course.previewIconIndex].icon,
 				});
 				setEditCourseModalIsOpen(true);
 			}}
 		>
 			<Stack spacing={0}>
 				<Group position="center" noWrap>
-					{courseIcons[course.previewIconIndex].icon}
+					{courseIconsWhite[course.previewIconIndex].icon}
 					<Stack spacing={0}>
 						<Text truncate fw={700} ta="center" color="white">
 							{course.courseName}

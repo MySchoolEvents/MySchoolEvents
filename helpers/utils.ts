@@ -23,9 +23,15 @@ function getOrdinalSuffixes(currentDay: number) {
 
 function formatChatTime(dateObject: Date) {
 	const hour = dateObject.getHours();
+	let formattedHour = hour % 12;
+	if (formattedHour === 0) {
+		formattedHour = 12;
+	}
 	const minutes = dateObject.getMinutes();
 	const amOrPm = hour < 12 ? "AM" : "PM";
-	let formattedTime = `${hour}:${minutes < 10 ? "0" : ""}${minutes} ${amOrPm}`;
+	let formattedTime = `${formattedHour}:${
+		minutes < 10 ? "0" : ""
+	}${minutes} ${amOrPm}`;
 
 	const now = new Date();
 	const today = new Date(

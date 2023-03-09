@@ -11,7 +11,7 @@ import {
 } from "@mantine/core";
 import { Children, useState, useEffect } from "react";
 import { IconBooks } from "@tabler/icons";
-import { courseIconsModal } from "@/helpers/icons";
+import { courseIconsBlack } from "@/helpers/icons";
 
 const useStyles = createStyles((theme) => ({
 	root: {
@@ -156,7 +156,7 @@ function EditCourseModal(props: {
 
 					<Menu.Dropdown>
 						{Children.toArray(
-							courseIconsModal.map((courseIcon, index) => (
+							courseIconsBlack.map((courseIcon, index) => (
 								<Menu.Item
 									icon={courseIcon.icon}
 									onClick={() => {

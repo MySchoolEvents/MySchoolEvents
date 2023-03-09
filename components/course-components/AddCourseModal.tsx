@@ -9,9 +9,9 @@ import {
 	Center,
 	Text,
 } from "@mantine/core";
-import { Children, useState, useLayoutEffect } from "react";
+import { Children, useState } from "react";
 import { IconBooks } from "@tabler/icons";
-import { courseIconsModal } from "@/helpers/icons";
+import { courseIconsBlack } from "@/helpers/icons";
 
 const useStyles = createStyles((theme) => ({
 	root: {
@@ -163,7 +163,7 @@ function AddCourseModal(props: {
 
 					<Menu.Dropdown>
 						{Children.toArray(
-							courseIconsModal.map((courseIcon, index) => (
+							courseIconsBlack.map((courseIcon, index) => (
 								<Menu.Item
 									icon={courseIcon.icon}
 									onClick={() => {
