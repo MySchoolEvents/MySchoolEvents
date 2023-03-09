@@ -36,6 +36,12 @@ const useStyles = createStyles((theme) => ({
 function AddCourseModal(props: {
 	addCourseModalIsOpen: boolean;
 	setAddCourseModalIsOpen: Function;
+	courses: {
+		courseName: string;
+		courseTeacher: string;
+		previewIconIndex: number;
+		backgroundColorIndex: number;
+	}[];
 }) {
 	const { classes, theme } = useStyles();
 	const [courseTitle, setCourseTitle] = useState("");
@@ -45,6 +51,14 @@ function AddCourseModal(props: {
 	const [courseIcon, setCourseIcon] = useState(<IconBooks size={30} />);
 
 	const handleCourseCreation = () => {
+		let highestBackgroundColorIndex = props.courses[0].backgroundColorIndex;
+		for (let i = 1; i < props.courses.length; i++) {
+			if (props.courses[i].backgroundColorIndex > highestBackgroundColorIndex) {
+				highestBackgroundColorIndex = props.courses[i].backgroundColorIndex;
+			}
+		}
+		const newBackgroundColorIndex = highestBackgroundColorIndex + 1;
+
 		resetState();
 		props.setAddCourseModalIsOpen(false);
 	};
@@ -78,7 +92,15 @@ function AddCourseModal(props: {
 			trapFocus
 		>
 			<Stack>
-				<Title size={"lg"} order={4} align="center">
+				<Title
+					sx={(theme) => ({
+						fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+						fontWeight: 700,
+					})}
+					size={"lg"}
+					order={4}
+					align="center"
+				>
 					Add a course
 				</Title>
 				<TextInput

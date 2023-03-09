@@ -46,12 +46,14 @@ function EditCourseModal(props: {
 	const { classes, theme } = useStyles();
 	const [courseTitle, setCourseTitle] = useState("");
 	const [courseTeacher, setCourseTeacher] = useState("");
-    const [courseIcon, setCourseIcon] = useState(props.currentCourseProperties.icon)
+	const [courseIcon, setCourseIcon] = useState(
+		props.currentCourseProperties.icon
+	);
 	const [courseIconIndex, setCourseIconIndex] = useState(0);
 
-    useEffect(() => {
-        setCourseIcon(props.currentCourseProperties.icon);
-    }, [props.currentCourseProperties])
+	useEffect(() => {
+		setCourseIcon(props.currentCourseProperties.icon);
+	}, [props.currentCourseProperties]);
 
 	const handleCourseEdit = () => {
 		const updatedTitle =
@@ -60,8 +62,11 @@ function EditCourseModal(props: {
 			courseTeacher === ""
 				? props.currentCourseProperties.teacher
 				: courseTeacher;
-        // if null, won't change course icon index, otherwise will change to current state
-        const updatedIcon = props.currentCourseProperties.icon !== courseIcon ? courseIconIndex : null;
+		// if null, won't change course icon index, otherwise will change to current state
+		const updatedIcon =
+			props.currentCourseProperties.icon !== courseIcon
+				? courseIconIndex
+				: null;
 
 		resetState();
 		props.setEditCourseModalIsOpen(false);
@@ -76,7 +81,7 @@ function EditCourseModal(props: {
 		setCourseTitle("");
 		setCourseTeacher("");
 		setCourseIconIndex(0);
-        setCourseIcon(<IconBooks size={30} />)
+		setCourseIcon(<IconBooks size={30} />);
 	};
 
 	return (
@@ -100,7 +105,15 @@ function EditCourseModal(props: {
 			trapFocus
 		>
 			<Stack>
-				<Title size={"lg"} order={4} align="center">
+				<Title
+					sx={(theme) => ({
+						fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+						fontWeight: 700,
+					})}
+					size={"lg"}
+					order={4}
+					align="center"
+				>
 					Edit a course
 				</Title>
 				<TextInput
@@ -112,9 +125,7 @@ function EditCourseModal(props: {
 					placeholder={props.currentCourseProperties.title}
 					classNames={classes}
 					onKeyDown={(event) => {
-						if (
-							event.key === "Enter"
-						) {
+						if (event.key === "Enter") {
 							handleCourseEdit();
 						}
 					}}
@@ -128,9 +139,7 @@ function EditCourseModal(props: {
 					placeholder={props.currentCourseProperties.teacher}
 					classNames={classes}
 					onKeyDown={(event) => {
-						if (
-							event.key === "Enter"
-						) {
+						if (event.key === "Enter") {
 							handleCourseEdit();
 						}
 					}}
@@ -151,7 +160,7 @@ function EditCourseModal(props: {
 								<Menu.Item
 									icon={courseIcon.icon}
 									onClick={() => {
-										setCourseIcon(courseIcon.icon)
+										setCourseIcon(courseIcon.icon);
 										setCourseIconIndex(index);
 									}}
 								>
