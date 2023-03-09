@@ -9,9 +9,9 @@ import {
 	Center,
 	Text,
 } from "@mantine/core";
-import { Children, useState } from "react";
+import { Children, useState, useLayoutEffect } from "react";
 import { IconBooks } from "@tabler/icons";
-import { courseIcons } from "@/helpers/icons";
+import { courseIconsModal } from "@/helpers/icons";
 
 const useStyles = createStyles((theme) => ({
 	root: {
@@ -33,20 +33,38 @@ const useStyles = createStyles((theme) => ({
 	},
 }));
 
-function AddCourseModal(props: {addCourseModalIsOpen: boolean, setAddCourseModalIsOpen: Function}) {
+function AddCourseModal(props: {
+	addCourseModalIsOpen: boolean;
+	setAddCourseModalIsOpen: Function;
+}) {
 	const { classes, theme } = useStyles();
 	const [courseTitle, setCourseTitle] = useState("");
 	const [courseTeacher, setCourseTeacher] = useState("");
 	const [buttonDisabled, setButtonDisabled] = useState(true);
-	const [courseIcon, setCourseIcon] = useState(<IconBooks />);
+	const [courseIconIndex, setCourseIconIndex] = useState(0);
+	const [courseIcon, setCourseIcon] = useState(<IconBooks size={30} />);
 
-	const handleCourseCreation = () => {};
+	const handleCourseCreation = () => {
+		resetState();
+		props.setAddCourseModalIsOpen(false);
+	};
+
+	const resetState = () => {
+		setCourseTitle("");
+		setCourseTeacher("");
+		setCourseIcon(<IconBooks size={30} />);
+		setCourseIconIndex(0);
+		setButtonDisabled(true);
+	};
 
 	return (
 		<Modal
 			opened={props.addCourseModalIsOpen}
 			centered
-			onClose={() => props.setAddCourseModalIsOpen(false)}
+			onClose={() => {
+				resetState();
+				props.setAddCourseModalIsOpen(false);
+			}}
 			withCloseButton={false}
 			overlayColor={
 				theme.colorScheme === "dark"
@@ -74,7 +92,7 @@ function AddCourseModal(props: {addCourseModalIsOpen: boolean, setAddCourseModal
 						}
 					}}
 					label="Title"
-					placeholder="Write your course title here"
+					placeholder={"Write your course title here"}
 					required
 					classNames={classes}
 					onKeyDown={(event) => {
@@ -83,7 +101,7 @@ function AddCourseModal(props: {addCourseModalIsOpen: boolean, setAddCourseModal
 							courseTitle !== "" &&
 							courseTeacher !== ""
 						) {
-                            handleCourseCreation();
+							handleCourseCreation();
 						}
 					}}
 				/>
@@ -98,7 +116,7 @@ function AddCourseModal(props: {addCourseModalIsOpen: boolean, setAddCourseModal
 						}
 					}}
 					label="Teacher"
-					placeholder="Write your course teacher here"
+					placeholder={"Write your course teacher here"}
 					required
 					classNames={classes}
 					onKeyDown={(event) => {
@@ -107,7 +125,7 @@ function AddCourseModal(props: {addCourseModalIsOpen: boolean, setAddCourseModal
 							courseTitle !== "" &&
 							courseTeacher !== ""
 						) {
-                            handleCourseCreation();
+							handleCourseCreation();
 						}
 					}}
 				/>
@@ -123,10 +141,13 @@ function AddCourseModal(props: {addCourseModalIsOpen: boolean, setAddCourseModal
 
 					<Menu.Dropdown>
 						{Children.toArray(
-							courseIcons.map((courseIcon) => (
+							courseIconsModal.map((courseIcon, index) => (
 								<Menu.Item
 									icon={courseIcon.icon}
-									onClick={() => setCourseIcon(courseIcon.icon)}
+									onClick={() => {
+										setCourseIcon(courseIcon.icon);
+										setCourseIconIndex(index);
+									}}
 								>
 									{courseIcon.label}
 								</Menu.Item>
@@ -137,7 +158,7 @@ function AddCourseModal(props: {addCourseModalIsOpen: boolean, setAddCourseModal
 				<Button
 					onClick={() => {
 						if (courseTitle !== "" && courseTeacher !== "") {
-                            handleCourseCreation();
+							handleCourseCreation();
 						}
 					}}
 					disabled={buttonDisabled}
