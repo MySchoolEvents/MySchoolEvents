@@ -1,10 +1,10 @@
 import React from "react";
 import { Text, Group, Stack, useMantineTheme, Paper } from "@mantine/core";
 import { courseIcons, courseIconsModal } from "@/helpers/icons";
+import { chooseColorRecursively, getCourseBackgroundColors } from "@/helpers/colors";
 
 type CourseCardProps = {
 	courseCardClass: string;
-	index: number;
 	course: any;
 	setEditCourseModalIsOpen: Function;
 	setCurrentCourseProperties: Function;
@@ -12,29 +12,12 @@ type CourseCardProps = {
 
 function CourseCard({
 	courseCardClass,
-	index,
 	course,
 	setEditCourseModalIsOpen,
 	setCurrentCourseProperties,
 }: CourseCardProps) {
 	const theme = useMantineTheme();
-
-	const courseBackgroundColors = [
-		theme.colors.blue[5],
-		theme.colors.red[5],
-		theme.colors.green[5],
-		theme.colors.orange[5],
-		theme.colors.grape[5],
-		theme.colors.teal[5],
-	];
-
-	function chooseColorRecursively(index: number): string {
-		if (index < courseBackgroundColors.length) {
-			return courseBackgroundColors[index];
-		} else {
-			return chooseColorRecursively(index - courseBackgroundColors.length);
-		}
-	}
+	const courseBackgroundColors = getCourseBackgroundColors(theme);
 
 	return (
 		<Paper
@@ -42,7 +25,7 @@ function CourseCard({
 			shadow="sm"
 			radius="lg"
 			p="lg"
-			style={{ backgroundColor: chooseColorRecursively(index) }}
+			style={{ backgroundColor:  chooseColorRecursively(course.backgroundColorIndex, courseBackgroundColors)}}
 			onClick={(event) => {
 				event.preventDefault();
 				setCurrentCourseProperties({

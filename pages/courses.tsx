@@ -15,21 +15,25 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 			courseName: "Introduction to Computer Science",
 			courseTeacher: "John Smith",
 			previewIconIndex: 1,
+			backgroundColorIndex: 0,
 		},
 		{
 			courseName: "Linear Algebra",
 			courseTeacher: "Emily Johnson",
 			previewIconIndex: 7,
+			backgroundColorIndex: 1,
 		},
 		{
 			courseName: "Shakespearean Literature",
 			courseTeacher: "William Brown",
 			previewIconIndex: 0,
+			backgroundColorIndex: 2,
 		},
 		{
 			courseName: "Philosophy of Ethics",
 			courseTeacher: "Sarah Lee",
 			previewIconIndex: 3,
+			backgroundColorIndex: 3,
 		},
 	];
 
@@ -56,6 +60,7 @@ type CoursesProps = {
 		courseName: string;
 		courseTeacher: string;
 		previewIconIndex: number;
+		backgroundColorIndex: number;
 	}[];
 };
 
@@ -73,7 +78,6 @@ export default function Courses({ courses } : CoursesProps) {
 		Children.toArray(
 			courses.map((course, index) => (
 				<CourseCard
-					index={index}
 					course={course}
 					courseCardClass={classes.courseCard}
 					setEditCourseModalIsOpen={setEditCourseModalIsOpen}
@@ -93,6 +97,7 @@ export default function Courses({ courses } : CoursesProps) {
 			</Head>
 			<main>
 				<AddCourseModal
+					courses={courses}
 					addCourseModalIsOpen={addCourseModalIsOpen}
 					setAddCourseModalIsOpen={setAddCourseModalIsOpen}
 				/>

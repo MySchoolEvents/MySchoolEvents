@@ -55,9 +55,8 @@ function CoursesContent(props: {
 	) => {
 		props.setCourseCards(
 			Children.toArray(
-				courseList.map((course, index) => (
+				courseList.map((course) => (
 					<CourseCard
-						index={index}
 						course={course}
 						courseCardClass={classes.courseCard}
 						setEditCourseModalIsOpen={props.setEditCourseModalIsOpen}

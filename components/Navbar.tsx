@@ -56,35 +56,18 @@ function CustomNavbar({ selectedTab }: Props) {
 					</UnstyledButton>
 				</Link>
 
-				<Link href={`/settings`}>
-					<UnstyledButton>
-						<Group position="center">
-							<IconSettings
-								color={selectedTab == "settings" ? "#228be6" : "gray"}
-								fontWeight={selectedTab == "settings" ? "#228be6" : "gray"}
-							/>
-							<Text
-								color={selectedTab == "settings" ? "#228be6" : "gray"}
-								weight={selectedTab == "settings" ? "bold" : "normal"}
-							>
-								Settings
-							</Text>
-						</Group>
-					</UnstyledButton>
-				</Link>
-
-				<Link href={`/chat`}>
+				<Link href={`/support`}>
 					<UnstyledButton>
 						<Group position="center">
 							<IconMessageCircle2
-								color={selectedTab == "chat" ? "#228be6" : "gray"}
-								fontWeight={selectedTab == "chat" ? "bold" : "regular"}
+								color={selectedTab == "support" ? "#228be6" : "gray"}
+								fontWeight={selectedTab == "support" ? "bold" : "regular"}
 							/>
 							<Text
-								color={selectedTab == "chat" ? "#228be6" : "gray"}
-								weight={selectedTab == "chat" ? "bold" : "normal"}
+								color={selectedTab == "support" ? "#228be6" : "gray"}
+								weight={selectedTab == "support" ? "bold" : "normal"}
 							>
-								Chat
+								Support
 							</Text>
 						</Group>
 					</UnstyledButton>
