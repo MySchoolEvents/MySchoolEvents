@@ -1,11 +1,87 @@
 import Head from "next/head";
-import CoursesContent from "@/components/CoursesContent";
+import CoursesContent from "@/components/course-components/CoursesContent";
 import CustomAppShell from "@/components/CustomAppShell";
-import { useState } from "react";
-import AddCourseModal from "@/components/AddCourseModal";
+import { useState, Children } from "react";
+import AddCourseModal from "@/components/course-components/AddCourseModal";
+import { IconBooks } from "@tabler/icons";
+import EditCourseModal from "@/components/course-components/EditCourseModal";
+import CourseCard from "@/components/course-components/CourseCard";
+import { createStyles } from "@mantine/core";
+import { GetServerSideProps } from "next";
 
-export default function Courses() {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	const courses = [
+		{
+			courseName: "Introduction to Computer Science",
+			courseTeacher: "John Smith",
+			previewIconIndex: 1,
+		},
+		{
+			courseName: "Linear Algebra",
+			courseTeacher: "Emily Johnson",
+			previewIconIndex: 7,
+		},
+		{
+			courseName: "Shakespearean Literature",
+			courseTeacher: "William Brown",
+			previewIconIndex: 0,
+		},
+		{
+			courseName: "Philosophy of Ethics",
+			courseTeacher: "Sarah Lee",
+			previewIconIndex: 3,
+		},
+	];
+
+	return {
+		props: {
+			courses: courses,
+		},
+	};
+};
+
+const useStyles = createStyles((theme) => ({
+	courseCard: {
+		transition: "transform 150ms ease, box-shadow 150ms ease",
+
+		"&:hover": {
+			transform: "scale(1.05)",
+			boxShadow: theme.shadows.md,
+		},
+	},
+}));
+
+type CoursesProps = {
+	courses: {
+		courseName: string;
+		courseTeacher: string;
+		previewIconIndex: number;
+	}[];
+};
+
+export default function Courses({ courses } : CoursesProps) {
+	const { classes } = useStyles();
 	const [addCourseModalIsOpen, setAddCourseModalIsOpen] = useState(false);
+	const [editCourseModalIsOpen, setEditCourseModalIsOpen] = useState(false);
+	const [currentCourseProperties, setCurrentCourseProperties] = useState({
+		title: "",
+		teacher: "",
+		icon: <IconBooks size={30} />,
+	});
+
+	const [courseCards, setCourseCards] = useState(
+		Children.toArray(
+			courses.map((course, index) => (
+				<CourseCard
+					index={index}
+					course={course}
+					courseCardClass={classes.courseCard}
+					setEditCourseModalIsOpen={setEditCourseModalIsOpen}
+					setCurrentCourseProperties={setCurrentCourseProperties}
+				/>
+			))
+		)
+	);
 
 	return (
 		<>
@@ -16,9 +92,25 @@ export default function Courses() {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<main>
-				<AddCourseModal addCourseModalIsOpen={addCourseModalIsOpen} setAddCourseModalIsOpen={setAddCourseModalIsOpen} />
+				<AddCourseModal
+					addCourseModalIsOpen={addCourseModalIsOpen}
+					setAddCourseModalIsOpen={setAddCourseModalIsOpen}
+				/>
+				<EditCourseModal
+					editCourseModalIsOpen={editCourseModalIsOpen}
+					setEditCourseModalIsOpen={setEditCourseModalIsOpen}
+					currentCourseProperties={currentCourseProperties}
+					setCurrentCourseProperties={setCurrentCourseProperties}
+				/>
 				<CustomAppShell selectedTab="courses">
-					<CoursesContent setAddCourseModalIsOpen={setAddCourseModalIsOpen} />
+					<CoursesContent
+						setAddCourseModalIsOpen={setAddCourseModalIsOpen}
+						setEditCourseModalIsOpen={setEditCourseModalIsOpen}
+						setCurrentCourseProperties={setCurrentCourseProperties}
+						courses={courses}
+						courseCards={courseCards}
+						setCourseCards={setCourseCards}
+					/>
 				</CustomAppShell>
 			</main>
 		</>

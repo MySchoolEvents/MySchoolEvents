@@ -25,10 +25,6 @@ const CustomAppShell = ({ children, selectedTab }: Props) => {
 			}
 		>
 			<Stack spacing={0}>
-				<Group position="right" maw="100%">
-					<UserAvatar />
-				</Group>
-
 				{/* actual content */}
 				{children}
 			</Stack>
