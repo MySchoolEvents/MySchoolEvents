@@ -42,7 +42,11 @@ function formatChatTime(dateObject: Date) {
 	const weekAgo = today - 7 * 24 * 60 * 60 * 1000;
 	const dateValue = dateObject.valueOf();
 
-	if (dateObject.getTime() === new Date().getTime()) {
+	if (
+		dateObject.getDate() === new Date().getDate() &&
+		dateObject.getMonth() === new Date().getMonth() &&
+		dateObject.getFullYear() === new Date().getFullYear()
+	) {
 		formattedTime = `${formattedTime}`;
 	} else {
 		if (dateValue < today && dateValue >= weekAgo) {
@@ -73,4 +77,12 @@ function formatChatTime(dateObject: Date) {
 	return formattedTime;
 }
 
-export { getCurrentDateOrdinalSuffixes, formatChatTime };
+const handleFetchError = (response: any) => {
+	if (!response.ok) { 
+	   throw Error(response.statusText);
+	} else {
+	   return response.json();
+	}
+ };
+
+export { getCurrentDateOrdinalSuffixes, formatChatTime, handleFetchError };

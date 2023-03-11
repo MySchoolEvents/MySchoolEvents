@@ -36,13 +36,9 @@ function Support() {
 		{
 			isAssistant: true,
 			content:
-				"Hello",
+				"Hello! I'm the My School Events AI assistant. How may I assist you today?",
 			timestamp: new Date(),
-		},
-		{
-			isAssistant: false,
-			content: "nam dignissimos culpa hic obcaecati. Maiores.",
-			timestamp: new Date(),
+			isLoader: false,
 		},
 	]);
 
@@ -56,7 +52,7 @@ function Support() {
 			</Head>
 			<main>
 				<CustomAppShell selectedTab="support">
-					<SupportContent messages={messageData} />
+					<SupportContent messages={messageData} setMessages={setMessageData} />
 				</CustomAppShell>
 			</main>
 		</>

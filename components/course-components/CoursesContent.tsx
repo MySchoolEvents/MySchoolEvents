@@ -1,4 +1,9 @@
-import React, { JSXElementConstructor, ReactElement, ReactFragment, ReactPortal } from "react";
+import React, {
+	JSXElementConstructor,
+	ReactElement,
+	ReactFragment,
+	ReactPortal,
+} from "react";
 import {
 	Button,
 	Menu,
@@ -10,11 +15,9 @@ import {
 	Avatar,
 	SimpleGrid,
 	Title,
+	Center,
 } from "@mantine/core";
-import {
-	IconChevronDown,
-	IconPlus,
-} from "@tabler/icons";
+import { IconChevronDown, IconPlus } from "@tabler/icons";
 import { getCurrentDateOrdinalSuffixes } from "@/helpers/utils";
 import { Children, useState, useEffect } from "react";
 import CourseCard from "./CourseCard";
@@ -31,56 +34,38 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function CoursesContent(props: {
-	courses: {
-		courseName: string;
-		courseTeacher: string;
-		previewIconIndex: number;
-	}[];
 	setAddCourseModalIsOpen: Function;
 	setEditCourseModalIsOpen: Function;
 	setCurrentCourseProperties: Function;
-  courseCards: (string | number | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal)[];
-  setCourseCards: Function;
+	courseArray: {
+		courseName: string;
+		courseTeacher: string;
+		previewIconIndex: number;
+		backgroundColorIndex: number;
+	}[];
+	setCourseArray: Function;
 }) {
-
 	const { classes } = useStyles();
 	const [sortMenuState, setSortMenuState] = useState("by order added");
 
-	const setCourseDisplayCards = (
-		courseList: {
-			courseName: string;
-			courseTeacher: string;
-			previewIconIndex: number;
-		}[]
-	) => {
-		props.setCourseCards(
-			Children.toArray(
-				courseList.map((course) => (
-					<CourseCard
-						course={course}
-						courseCardClass={classes.courseCard}
-						setEditCourseModalIsOpen={props.setEditCourseModalIsOpen}
-						setCurrentCourseProperties={props.setCurrentCourseProperties}
-					/>
-				))
-			)
-		);
-	};
+	// useeffect issue
 
 	useEffect(() => {
-		let courseListClone = [...props.courses];
+		let courseListClone = [...props.courseArray];
 		let sortedCourseList;
 
 		if (sortMenuState === "by order added") {
-			sortedCourseList = courseListClone;
+			sortedCourseList = courseListClone.sort(
+				(a, b) => a.backgroundColorIndex - b.backgroundColorIndex
+			);
 		} else {
 			sortedCourseList = courseListClone.sort((a, b) =>
 				a.courseName.localeCompare(b.courseName)
 			);
 		}
 
-		setCourseDisplayCards(sortedCourseList);
-	}, [sortMenuState]);
+		props.setCourseArray(sortedCourseList);
+	}, [sortMenuState, props.setCourseArray]);
 
 	return (
 		<Stack m={"md"}>
@@ -145,14 +130,39 @@ function CoursesContent(props: {
 						</Menu>
 					</Group>
 					{/* course grid component here*/}
-					<SimpleGrid
-						cols={3}
-						breakpoints={[{ maxWidth: "sm", cols: 1 }]}
-						mb="xl"
-						spacing="xl"
-					>
-						{props.courseCards}
-					</SimpleGrid>
+					{props.courseArray.length !== 0 ? (
+						<SimpleGrid
+							cols={3}
+							breakpoints={[{ maxWidth: "sm", cols: 1 }]}
+							mb="xl"
+							spacing="xl"
+						>
+							{Children.toArray(
+								props.courseArray.map((course) => (
+									<CourseCard
+										course={course}
+										courseCardClass={classes.courseCard}
+										setEditCourseModalIsOpen={props.setEditCourseModalIsOpen}
+										setCurrentCourseProperties={
+											props.setCurrentCourseProperties
+										}
+									/>
+								))
+							)}
+						</SimpleGrid>
+					) : (
+						<Center>
+							<Text
+								weight={"bold"}
+								c="dimmed"
+								size="lg"
+								ta="center"
+								transform="uppercase"
+							>
+								No courses available
+							</Text>
+						</Center>
+					)}
 				</Stack>
 			</Stack>
 		</Stack>

@@ -36,12 +36,13 @@ const useStyles = createStyles((theme) => ({
 function AddCourseModal(props: {
 	addCourseModalIsOpen: boolean;
 	setAddCourseModalIsOpen: Function;
-	courses: {
+	courseArray: {
 		courseName: string;
 		courseTeacher: string;
 		previewIconIndex: number;
 		backgroundColorIndex: number;
 	}[];
+	setCourseArray: Function;
 }) {
 	const { classes, theme } = useStyles();
 	const [courseTitle, setCourseTitle] = useState("");
@@ -51,10 +52,14 @@ function AddCourseModal(props: {
 	const [courseIcon, setCourseIcon] = useState(<IconBooks size={30} />);
 
 	const handleCourseCreation = () => {
-		let highestBackgroundColorIndex = props.courses[0].backgroundColorIndex;
-		for (let i = 1; i < props.courses.length; i++) {
-			if (props.courses[i].backgroundColorIndex > highestBackgroundColorIndex) {
-				highestBackgroundColorIndex = props.courses[i].backgroundColorIndex;
+		// if there is no first element in the array, the highest background color index will be -1
+		let highestBackgroundColorIndex =
+			props.courseArray[0].backgroundColorIndex ?? -1;
+		for (let i = 1; i < props.courseArray.length; i++) {
+			if (
+				props.courseArray[i].backgroundColorIndex > highestBackgroundColorIndex
+			) {
+				highestBackgroundColorIndex = props.courseArray[i].backgroundColorIndex;
 			}
 		}
 		const newBackgroundColorIndex = highestBackgroundColorIndex + 1;

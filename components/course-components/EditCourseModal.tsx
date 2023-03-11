@@ -42,6 +42,13 @@ function EditCourseModal(props: {
 		icon: JSX.Element;
 	};
 	setCurrentCourseProperties: Function;
+	courseArray: {
+		courseName: string;
+		courseTeacher: string;
+		previewIconIndex: number;
+		backgroundColorIndex: number;
+	}[];
+	setCourseArray: Function;
 }) {
 	const { classes, theme } = useStyles();
 	const [courseTitle, setCourseTitle] = useState("");
