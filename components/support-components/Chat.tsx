@@ -1,147 +1,153 @@
-import { useEffect, useState } from "react";
-import { IconSend, IconRefresh } from "@tabler/icons";
+import { IconSend, IconRefresh, IconX } from "@tabler/icons";
 import {
 	ScrollArea,
 	Stack,
 	Group,
 	ActionIcon,
-	Alert,
-	Avatar,
-	Collapse,
 	TextInput,
-	Text,
-	useMantineTheme,
-	Tooltip,
+	Loader,
 } from "@mantine/core";
-import { formatChatTime } from "@/helpers/utils";
+import { formatChatTime, handleFetchError } from "@/helpers/utils";
+import { Children, useEffect, useRef, useState } from "react";
+import ChatMessage from "./ChatMessage";
+import { showNotification } from "@mantine/notifications";
 
-function Chat() {
-	const [hovering, setIsHovering] = useState(false);
-	const theme = useMantineTheme();
+type ChatProps = {
+	messages: {
+		isAssistant: boolean;
+		content: string;
+		timestamp: Date;
+		isLoader: boolean;
+	}[];
+	setMessages: Function;
+};
 
-	const messages = [
-		{
-			author: "assistant",
-			content:
-				"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat totam, magnam quod iure tempore necessitatibus iusto esse praesentium? Alias quis rem sed, quaerat libero molestias delectus quidem voluptatem error ea?",
-			timestamp: new Date(Date.now()),
-		},
-		{
-			author: "user",
-			content: "Thank you.",
-			timestamp: new Date(Date.now()),
-		},
-	];
+function Chat({ messages, setMessages }: ChatProps) {
+	const [chatInput, setChatInput] = useState("");
+	const [conversationHistory, setConversationHistory] = useState(
+		"Chatbot: 'Hello! I'm the My School Events AI assistant. How may I assist you today?'"
+	);
+	const [assistantTypingChange, setAssistantTypingChange] = useState(false);
+	const scrollRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+	}, [messages, assistantTypingChange]);
+
+	useEffect;
+
+	const handleNewTopic = () => {
+		setChatInput("");
+		setConversationHistory(
+			"Chatbot: 'Hello! I'm the My School Events AI assistant. How may I assist you today?'"
+		);
+		setMessages([
+			{
+				isAssistant: true,
+				content:
+					"Hello! I'm the My School Events AI assistant. How may I assist you today?",
+				timestamp: new Date(),
+				isLoader: false,
+			},
+		]);
+	};
+
+	const handleChatSend = () => {
+		// append new message from user and add loader message to indicate chatbot is loading
+		const messagesClone = [
+			...messages,
+			{
+				isAssistant: false,
+				content: chatInput,
+				timestamp: new Date(),
+				isLoader: false,
+			},
+			{
+				isAssistant: true,
+				content: "",
+				timestamp: new Date(),
+				isLoader: true,
+			},
+		];
+		setMessages(messagesClone);
+		setChatInput("");
+		const chatHistory = conversationHistory.concat(` User: '${chatInput}'`);
+
+		fetch("/api/chat", {
+			method: "post",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				message: chatInput,
+				conversationHistory: chatHistory,
+			}),
+		})
+			.then(handleFetchError)
+			.then((res) => res.json())
+			.then((data) => {
+				chatHistory.concat(` Chatbot: '${data.response}'`);
+				setConversationHistory(chatHistory);
+
+				// remove chatbot loading message
+				messagesClone.pop();
+
+				// append new message from assistant
+				messagesClone.push({
+					isAssistant: true,
+					content: data.response,
+					timestamp: new Date(),
+					isLoader: false,
+				});
+				setMessages(messagesClone);
+				setAssistantTypingChange(!assistantTypingChange);
+			})
+			.catch((error) => {
+				console.log(error);
+				// remove chatbot loading message
+				messagesClone.pop();
+
+				// append new message from assistant
+				messagesClone.push({
+					isAssistant: true,
+					content: `Sorry, looks like we ran into an issue sending your message. Check your Wi-Fi connection 
+						or browser to make sure you have Internet access.`,
+					timestamp: new Date(),
+					isLoader: false,
+				});
+				setMessages(messagesClone);
+				setAssistantTypingChange(!assistantTypingChange);
+			});
+	};
 
 	return (
 		<>
-			<Stack sx={{ height: "67vh" }} p={0}>
-				<ScrollArea p="xs" sx={{ height: "67vh" }}>
+			<Stack sx={{ height: "66vh" }} p={0}>
+				<ScrollArea p="xs" sx={{ height: "66vh" }}>
 					<Stack>
-						{/* user chat message on the right starts here */}
-						<Group
-							position={"right"}
-							noWrap
-							onMouseEnter={() => {
-								setIsHovering(true);
-							}}
-							onMouseLeave={() => {
-								setIsHovering(false);
-							}}
-						>
-							<Stack p={0} spacing={2} sx={{ maxWidth: "80%" }}>
-								<Group position={"right"} spacing="xs">
-									<Stack p={0} spacing={0} m={0}>
-										<Group position={"right"} spacing={3} align="center" noWrap>
-											<Alert
-												color={"blue"}
-												radius="md"
-												py={8}
-												variant={"filled"}
-											>
-												<Text
-													sx={(theme) => ({
-														fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-													})}
-													size="md"
-												>
-													Lorem ipsum dolor, sit amet consectetur adipisicing
-													elit. Quisquam, repellendus. Reprehenderit minus vero
-													error mollitia, aperiam veritatis similique voluptate,
-													corporis natus, praesentium libero aspernatur? Ab id
-													quibusdam alias iste odio?
-												</Text>
-											</Alert>
-										</Group>
-									</Stack>
-								</Group>
-								<Collapse in={true} px="xs">
-									{
-										<Text size="xs" align={"right"} color="dimmed">
-											2:16 PM
-										</Text>
-									}
-								</Collapse>
-							</Stack>
-						</Group>
-						{/* ends here */}
-						{/* message from chatbot on the left starts here */}
-						<Group
-							position={"left"}
-							noWrap
-							onMouseEnter={() => {
-								setIsHovering(true);
-							}}
-							onMouseLeave={() => {
-								setIsHovering(false);
-							}}
-						>
-							<Stack p={0} spacing={2} sx={{ maxWidth: "80%" }}>
-								<Group position={"left"} spacing="xs">
-									<Tooltip label={"AI Assistant"} position="top-end">
-										<Avatar />
-									</Tooltip>
-
-									<Stack p={0} spacing={0} m={0}>
-										<Group position={"left"} spacing={3} align="center" noWrap>
-											<Alert
-												color="white"
-												radius="md"
-												py={8}
-												variant={"outline"}
-												style={{
-													borderColor: `${theme.colors.gray[4]}`,
-												}}
-											>
-												<Text
-													sx={(theme) => ({
-														fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-													})}
-													size="md"
-												>
-													Good afternoon
-												</Text>
-											</Alert>
-										</Group>
-									</Stack>
-								</Group>
-								<Collapse in={true} px="xs">
-									{
-										<Text size="xs" color="dimmed" ml={50}>
-											2:16 PM
-										</Text>
-									}
-								</Collapse>
-							</Stack>
-						</Group>
-						{/* ends here */}
+						{Children.toArray(
+							messages.map((message) => (
+								<ChatMessage
+									message={message.content}
+									timestamp={formatChatTime(message.timestamp)}
+									isAssistant={message.isAssistant}
+									assistantTypingChange={assistantTypingChange}
+									setAssistantTypingChange={setAssistantTypingChange}
+									isLoader={message.isLoader}
+								/>
+							))
+						)}
 					</Stack>
+					<div style={{ float: "left", clear: "both" }} ref={scrollRef} />
 				</ScrollArea>
 			</Stack>
 			{/* chat box ui here */}
-			{/* <div style={{ position: "sticky", bottom: 3, right: 3}}> */}
 			<Group position="right" p="xs">
-				<ActionIcon size="lg" title="New conversation">
+				<ActionIcon
+					size="lg"
+					title="New topic"
+					onClick={() => {
+						handleNewTopic();
+					}}
+				>
 					<IconRefresh />
 				</ActionIcon>
 				<TextInput
@@ -149,12 +155,26 @@ function Chat() {
 					radius="lg"
 					placeholder="Got a question? Type it in here."
 					autoFocus
+					value={chatInput}
+					onChange={(event) => {
+						setChatInput(event.currentTarget.value);
+					}}
+					onKeyDown={(event) => {
+						if (event.key === "Enter" && chatInput !== "") {
+							handleChatSend();
+						}
+					}}
 				/>
-				<ActionIcon size="lg" title="Send message">
+				<ActionIcon
+					size="lg"
+					title="Send message"
+					onClick={() => {
+						if (chatInput !== "") handleChatSend();
+					}}
+				>
 					<IconSend />
 				</ActionIcon>
 			</Group>
-			{/* </div> */}
 			{/* ends here */}
 		</>
 	);

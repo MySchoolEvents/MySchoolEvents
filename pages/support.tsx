@@ -2,7 +2,46 @@ import Head from "next/head";
 import CustomAppShell from "@/components/CustomAppShell";
 import SupportContent from "@/components/support-components/SupportContent";
 
+import { GetServerSideProps } from "next";
+import { useState } from "react";
+
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+// 	const messages = [
+// 		{
+// 			isAssistant: true,
+// 			content:
+// 				"Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam minima repudiandae accusamus sequi est cumque voluptate, quia laboriosam nostrum veniam illo accusantium iusto officiis nam dignissimos culpa hic obcaecati. Maiores.",
+// 			timestamp: new Date().toJSON(),
+// 		},
+// 		{
+// 			isAssistant: false,
+// 			content: "nam dignissimos culpa hic obcaecati. Maiores.",
+// 			timestamp: new Date().toJSON(),
+// 		},
+// 	];
+
+// 	return {
+// 		props: {
+// 			messages: messages,
+// 		},
+// 	};
+// };
+
+// type SupportProps = {
+// 	messages: { isAssistant: boolean; content: string; timestamp: string }[];
+// };
+
 function Support() {
+	const [messageData, setMessageData] = useState([
+		{
+			isAssistant: true,
+			content:
+				"Hello! I'm the My School Events AI assistant. How may I assist you today?",
+			timestamp: new Date(),
+			isLoader: false,
+		},
+	]);
+
 	return (
 		<>
 			<Head>
@@ -13,7 +52,7 @@ function Support() {
 			</Head>
 			<main>
 				<CustomAppShell selectedTab="support">
-					<SupportContent />
+					<SupportContent messages={messageData} setMessages={setMessageData} />
 				</CustomAppShell>
 			</main>
 		</>

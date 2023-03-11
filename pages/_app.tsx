@@ -1,29 +1,33 @@
-import { AppProps } from 'next/app';
-import Head from 'next/head';
-import { MantineProvider } from '@mantine/core';
-import "../styles/globals.css"
+import { AppProps } from "next/app";
+import Head from "next/head";
+import { MantineProvider } from "@mantine/core";
+import "../styles/globals.css";
+import { NotificationsProvider } from "@mantine/notifications";
 
 export default function App(props: AppProps) {
-  const { Component, pageProps } = props;
+	const { Component, pageProps } = props;
 
-  return (
-    <>
+	return (
+		<>
+			<Head>
+				<title>CAP23</title>
+				<meta
+					name="viewport"
+					content="minimum-scale=1, initial-scale=1, width=device-width"
+				/>
+			</Head>
 
-      <Head>
-        <title>CAP23</title>
-        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
-      </Head>
-
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-        theme={{
-          /** Put your mantine theme override here */
-          colorScheme: 'light',
-        }}
-      >
-        <Component {...pageProps} />
-      </MantineProvider>
-    </>
-  );
+			<MantineProvider
+				withGlobalStyles
+				withNormalizeCSS
+				theme={{
+					/** Put your mantine theme override here */
+					colorScheme: "light",
+				}}
+			>
+				<NotificationsProvider />
+				<Component {...pageProps} />
+			</MantineProvider>
+		</>
+	);
 }

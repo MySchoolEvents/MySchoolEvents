@@ -39,8 +39,11 @@ function FAQ() {
 				variant="separated"
 			>
 				<Accordion.Item className={classes.item} value="reset-password">
-					<Accordion.Control>How can I reset my password?</Accordion.Control>
-					<Accordion.Panel>{placeholder}</Accordion.Panel>
+					<Accordion.Control>
+						How do I sign up for My School Events?
+					</Accordion.Control>
+					<Accordion.Panel>{`You can sign up for My School Events with Google. We integrate OAuth to 
+					ensure an easy migration process for schools and seamless sign-in for users.`}</Accordion.Panel>
 				</Accordion.Item>
 
 				<Accordion.Item className={classes.item} value="another-account">
@@ -66,9 +69,12 @@ function FAQ() {
 
 				<Accordion.Item className={classes.item} value="payment">
 					<Accordion.Control>
-						What payment systems to you work with?
+						How can I contact technical support if I have a problem with the
+						application?
 					</Accordion.Control>
-					<Accordion.Panel>{placeholder}</Accordion.Panel>
+					<Accordion.Panel>{`We have an intelligent support chatbot that is designed 
+					to help users with any queries they might have regarding My School Events. 
+					Alternatively, you can email support at devaidanbunch@gmail.com or devderekhsieh@gmail.com.`}</Accordion.Panel>
 				</Accordion.Item>
 			</Accordion>
 		</Container>

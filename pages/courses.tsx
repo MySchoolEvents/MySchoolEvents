@@ -37,23 +37,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		},
 	];
 
+	// const courses: any[] = [];
+
 	return {
 		props: {
 			courses: courses,
 		},
 	};
 };
-
-const useStyles = createStyles((theme) => ({
-	courseCard: {
-		transition: "transform 150ms ease, box-shadow 150ms ease",
-
-		"&:hover": {
-			transform: "scale(1.05)",
-			boxShadow: theme.shadows.md,
-		},
-	},
-}));
 
 type CoursesProps = {
 	courses: {
@@ -64,8 +55,7 @@ type CoursesProps = {
 	}[];
 };
 
-export default function Courses({ courses } : CoursesProps) {
-	const { classes } = useStyles();
+export default function Courses({ courses }: CoursesProps) {
 	const [addCourseModalIsOpen, setAddCourseModalIsOpen] = useState(false);
 	const [editCourseModalIsOpen, setEditCourseModalIsOpen] = useState(false);
 	const [currentCourseProperties, setCurrentCourseProperties] = useState({
@@ -73,19 +63,7 @@ export default function Courses({ courses } : CoursesProps) {
 		teacher: "",
 		icon: <IconBooks size={30} />,
 	});
-
-	const [courseCards, setCourseCards] = useState(
-		Children.toArray(
-			courses.map((course, index) => (
-				<CourseCard
-					course={course}
-					courseCardClass={classes.courseCard}
-					setEditCourseModalIsOpen={setEditCourseModalIsOpen}
-					setCurrentCourseProperties={setCurrentCourseProperties}
-				/>
-			))
-		)
-	);
+	const [courseArray, setCourseArray] = useState(courses);
 
 	return (
 		<>
@@ -97,11 +75,14 @@ export default function Courses({ courses } : CoursesProps) {
 			</Head>
 			<main>
 				<AddCourseModal
-					courses={courses}
+					courseArray={courseArray}
+					setCourseArray={setCourseArray}
 					addCourseModalIsOpen={addCourseModalIsOpen}
 					setAddCourseModalIsOpen={setAddCourseModalIsOpen}
 				/>
 				<EditCourseModal
+					courseArray={courseArray}
+					setCourseArray={setCourseArray}
 					editCourseModalIsOpen={editCourseModalIsOpen}
 					setEditCourseModalIsOpen={setEditCourseModalIsOpen}
 					currentCourseProperties={currentCourseProperties}
@@ -112,9 +93,8 @@ export default function Courses({ courses } : CoursesProps) {
 						setAddCourseModalIsOpen={setAddCourseModalIsOpen}
 						setEditCourseModalIsOpen={setEditCourseModalIsOpen}
 						setCurrentCourseProperties={setCurrentCourseProperties}
-						courses={courses}
-						courseCards={courseCards}
-						setCourseCards={setCourseCards}
+						courseArray={courseArray}
+						setCourseArray={setCourseArray}
 					/>
 				</CustomAppShell>
 			</main>

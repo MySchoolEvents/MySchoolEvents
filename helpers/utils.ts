@@ -23,9 +23,15 @@ function getOrdinalSuffixes(currentDay: number) {
 
 function formatChatTime(dateObject: Date) {
 	const hour = dateObject.getHours();
+	let formattedHour = hour % 12;
+	if (formattedHour === 0) {
+		formattedHour = 12;
+	}
 	const minutes = dateObject.getMinutes();
 	const amOrPm = hour < 12 ? "AM" : "PM";
-	let formattedTime = `${hour}:${minutes < 10 ? "0" : ""}${minutes} ${amOrPm}`;
+	let formattedTime = `${formattedHour}:${
+		minutes < 10 ? "0" : ""
+	}${minutes} ${amOrPm}`;
 
 	const now = new Date();
 	const today = new Date(
@@ -36,7 +42,11 @@ function formatChatTime(dateObject: Date) {
 	const weekAgo = today - 7 * 24 * 60 * 60 * 1000;
 	const dateValue = dateObject.valueOf();
 
-	if (dateObject.getTime() === new Date().getTime()) {
+	if (
+		dateObject.getDate() === new Date().getDate() &&
+		dateObject.getMonth() === new Date().getMonth() &&
+		dateObject.getFullYear() === new Date().getFullYear()
+	) {
 		formattedTime = `${formattedTime}`;
 	} else {
 		if (dateValue < today && dateValue >= weekAgo) {
@@ -67,4 +77,12 @@ function formatChatTime(dateObject: Date) {
 	return formattedTime;
 }
 
-export { getCurrentDateOrdinalSuffixes, formatChatTime };
+const handleFetchError = (response: any) => {
+	if (!response.ok) { 
+	   throw Error(response.statusText);
+	} else {
+	   return response.json();
+	}
+ };
+
+export { getCurrentDateOrdinalSuffixes, formatChatTime, handleFetchError };
