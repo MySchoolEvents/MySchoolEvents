@@ -7,52 +7,51 @@ import { IconBooks } from "@tabler/icons";
 import EditCourseModal from "@/components/course-components/EditCourseModal";
 import CourseCard from "@/components/course-components/CourseCard";
 import { createStyles } from "@mantine/core";
+import { v4 as uuidv4 } from "uuid";
 import { GetServerSideProps } from "next";
+import { loadCourses } from "@/helpers/FirebaseHelpers";
+import { UserAuth } from "@/context/AuthContext";
+import React from "react";
+import nookies from "nookies";
+import { GetServerSidePropsContext } from "next";
+import { admin } from "@/firebase/admin";
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-	const courses = [
-		{
-			courseName: "Introduction to Computer Science",
-			courseTeacher: "John Smith",
-			previewIconIndex: 1,
-			backgroundColorIndex: 0,
-		},
-		{
-			courseName: "Linear Algebra",
-			courseTeacher: "Emily Johnson",
-			previewIconIndex: 7,
-			backgroundColorIndex: 1,
-		},
-		{
-			courseName: "Shakespearean Literature",
-			courseTeacher: "William Brown",
-			previewIconIndex: 0,
-			backgroundColorIndex: 2,
-		},
-		{
-			courseName: "Philosophy of Ethics",
-			courseTeacher: "Sarah Lee",
-			previewIconIndex: 3,
-			backgroundColorIndex: 3,
-		},
-	];
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+	try {
+		const cookies = nookies.get(ctx);
+		const token = await admin.auth().verifyIdToken(cookies.token);
 
-	// const courses: any[] = [];
+		const { uid } = token;
+		const courses = await loadCourses(uid);
 
-	return {
-		props: {
-			courses: courses,
-		},
-	};
+		return {
+			props: {
+				courses: courses,
+			},
+		};
+	} catch (err) {
+		// either the `token` cookie didn't exist
+		// or token verification failed
+		// either way: redirect to the login page
+		ctx.res.writeHead(302, { Location: "/auth" });
+		ctx.res.end();
+
+		// The props returned here don't matter because we've
+		// already redirected the user.
+		return { props: {} as never };
+	}
 };
 
 type CoursesProps = {
-	courses: {
-		courseName: string;
-		courseTeacher: string;
-		previewIconIndex: number;
-		backgroundColorIndex: number;
-	}[];
+	courses:
+		| {
+				title: string;
+				teacher: string;
+				previewIconIndex: number;
+				backgroundColorIndex: number;
+				id: string;
+		  }[]
+		| [];
 };
 
 export default function Courses({ courses }: CoursesProps) {
@@ -62,6 +61,10 @@ export default function Courses({ courses }: CoursesProps) {
 		title: "",
 		teacher: "",
 		icon: <IconBooks size={30} />,
+		iconIndex: 0,
+		backgroundColorIndex: 0,
+		index: 0,
+		id: "",
 	});
 	const [courseArray, setCourseArray] = useState(courses);
 

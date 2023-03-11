@@ -1,13 +1,17 @@
 import React from "react";
 import { Text, Group, Stack, useMantineTheme, Paper } from "@mantine/core";
 import { courseIconsWhite, courseIconsBlack } from "@/helpers/icons";
-import { chooseColorRecursively, getCourseBackgroundColors } from "@/helpers/colors";
+import {
+	chooseColorRecursively,
+	getCourseBackgroundColors,
+} from "@/helpers/colors";
 
 type CourseCardProps = {
 	courseCardClass: string;
 	course: any;
 	setEditCourseModalIsOpen: Function;
 	setCurrentCourseProperties: Function;
+	index: number;
 };
 
 function CourseCard({
@@ -15,6 +19,7 @@ function CourseCard({
 	course,
 	setEditCourseModalIsOpen,
 	setCurrentCourseProperties,
+	index,
 }: CourseCardProps) {
 	const theme = useMantineTheme();
 	const courseBackgroundColors = getCourseBackgroundColors(theme);
@@ -25,13 +30,22 @@ function CourseCard({
 			shadow="sm"
 			radius="lg"
 			p="lg"
-			style={{ backgroundColor:  chooseColorRecursively(course.backgroundColorIndex, courseBackgroundColors)}}
+			style={{
+				backgroundColor: chooseColorRecursively(
+					course.backgroundColorIndex,
+					courseBackgroundColors
+				),
+			}}
 			onClick={(event) => {
 				event.preventDefault();
 				setCurrentCourseProperties({
-					title: course.courseName,
-					teacher: course.courseTeacher,
+					title: course.title,
+					teacher: course.teacher,
 					icon: courseIconsBlack[course.previewIconIndex].icon,
+					iconIndex: course.previewIconIndex,
+					backgroundColorIndex: course.backgroundColorIndex,
+					id: course.id,
+					index: index,
 				});
 				setEditCourseModalIsOpen(true);
 			}}
@@ -41,10 +55,10 @@ function CourseCard({
 					{courseIconsWhite[course.previewIconIndex].icon}
 					<Stack spacing={0}>
 						<Text truncate fw={700} ta="center" color="white">
-							{course.courseName}
+							{course.title}
 						</Text>
 						<Text truncate fw={500} ta="center" color="white">
-							{course.courseTeacher}
+							{course.teacher}
 						</Text>
 					</Stack>
 				</Group>

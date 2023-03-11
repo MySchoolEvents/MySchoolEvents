@@ -37,12 +37,15 @@ function CoursesContent(props: {
 	setAddCourseModalIsOpen: Function;
 	setEditCourseModalIsOpen: Function;
 	setCurrentCourseProperties: Function;
-	courseArray: {
-		courseName: string;
-		courseTeacher: string;
-		previewIconIndex: number;
-		backgroundColorIndex: number;
-	}[];
+	courseArray:
+		| {
+				title: string;
+				teacher: string;
+				previewIconIndex: number;
+				backgroundColorIndex: number;
+				id: string;
+		  }[]
+		| [];
 	setCourseArray: Function;
 }) {
 	const { classes } = useStyles();
@@ -60,7 +63,7 @@ function CoursesContent(props: {
 			);
 		} else {
 			sortedCourseList = courseListClone.sort((a, b) =>
-				a.courseName.localeCompare(b.courseName)
+				a.title.localeCompare(b.title)
 			);
 		}
 
@@ -138,7 +141,7 @@ function CoursesContent(props: {
 							spacing="xl"
 						>
 							{Children.toArray(
-								props.courseArray.map((course) => (
+								props.courseArray.map((course, index) => (
 									<CourseCard
 										course={course}
 										courseCardClass={classes.courseCard}
@@ -146,6 +149,7 @@ function CoursesContent(props: {
 										setCurrentCourseProperties={
 											props.setCurrentCourseProperties
 										}
+										index={index}
 									/>
 								))
 							)}
