@@ -82,7 +82,6 @@ function Chat({ messages, setMessages }: ChatProps) {
 			}),
 		})
 			.then(handleFetchError)
-			.then((res) => res.json())
 			.then((data) => {
 				chatHistory.concat(` Chatbot: '${data.response}'`);
 				setConversationHistory(chatHistory);
@@ -105,7 +104,7 @@ function Chat({ messages, setMessages }: ChatProps) {
 				// remove chatbot loading message
 				messagesClone.pop();
 
-				// append new message from assistant
+				// append error message
 				messagesClone.push({
 					isAssistant: true,
 					content: `Sorry, looks like we ran into an issue sending your message. Check your Wi-Fi connection 

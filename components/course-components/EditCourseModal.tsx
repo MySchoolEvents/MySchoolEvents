@@ -12,6 +12,8 @@ import {
 import { Children, useState, useEffect } from "react";
 import { IconBooks } from "@tabler/icons";
 import { courseIconsBlack } from "@/helpers/icons";
+import { editCourse, removeCourse } from "@/helpers/FirebaseHelpers";
+import { UserAuth } from "@/context/AuthContext";
 
 const useStyles = createStyles((theme) => ({
 	root: {
@@ -40,16 +42,24 @@ function EditCourseModal(props: {
 		title: string;
 		teacher: string;
 		icon: JSX.Element;
+		iconIndex: number;
+		backgroundColorIndex: number;
+		index: number;
+		id: string,
 	};
 	setCurrentCourseProperties: Function;
-	courseArray: {
-		courseName: string;
-		courseTeacher: string;
-		previewIconIndex: number;
-		backgroundColorIndex: number;
-	}[];
+	courseArray:
+		| {
+				title: string;
+				teacher: string;
+				previewIconIndex: number;
+				backgroundColorIndex: number;
+				id: string;
+		  }[]
+		| [];
 	setCourseArray: Function;
 }) {
+	const { user } = UserAuth();
 	const { classes, theme } = useStyles();
 	const [courseTitle, setCourseTitle] = useState("");
 	const [courseTeacher, setCourseTeacher] = useState("");
@@ -73,13 +83,34 @@ function EditCourseModal(props: {
 		const updatedIcon =
 			props.currentCourseProperties.icon !== courseIcon
 				? courseIconIndex
-				: null;
+				: props.currentCourseProperties.iconIndex;
+
+		// update state of current course in course array
+		let clonedCourseArray = [...props.courseArray];
+		clonedCourseArray[props.currentCourseProperties.index] = {
+			title: updatedTitle,
+			teacher: updatedTeacher,
+			previewIconIndex: updatedIcon,
+			backgroundColorIndex: props.currentCourseProperties.backgroundColorIndex,
+			id: props.currentCourseProperties.id,
+		};
+
+		props.setCourseArray(clonedCourseArray);
+		// @ts-ignore
+		editCourse(user.uid, props.currentCourseProperties.id, updatedTitle, updatedTeacher, updatedIcon);
 
 		resetState();
 		props.setEditCourseModalIsOpen(false);
 	};
 
 	const handleCourseRemoval = () => {
+		let clonedCourseArray = [...props.courseArray];
+		clonedCourseArray.splice(props.currentCourseProperties.index, 1);
+
+		props.setCourseArray(clonedCourseArray);
+		// @ts-ignore
+		removeCourse(user.uid, props.currentCourseProperties.id);
+
 		resetState();
 		props.setEditCourseModalIsOpen(false);
 	};

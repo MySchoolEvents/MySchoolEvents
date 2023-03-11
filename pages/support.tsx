@@ -1,35 +1,30 @@
 import Head from "next/head";
 import CustomAppShell from "@/components/CustomAppShell";
 import SupportContent from "@/components/support-components/SupportContent";
-
 import { GetServerSideProps } from "next";
 import { useState } from "react";
+import React from "react";
+import nookies from "nookies";
+import { InferGetServerSidePropsType, GetServerSidePropsContext } from "next";
+import { admin } from "@/firebase/admin";
 
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-// 	const messages = [
-// 		{
-// 			isAssistant: true,
-// 			content:
-// 				"Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam minima repudiandae accusamus sequi est cumque voluptate, quia laboriosam nostrum veniam illo accusantium iusto officiis nam dignissimos culpa hic obcaecati. Maiores.",
-// 			timestamp: new Date().toJSON(),
-// 		},
-// 		{
-// 			isAssistant: false,
-// 			content: "nam dignissimos culpa hic obcaecati. Maiores.",
-// 			timestamp: new Date().toJSON(),
-// 		},
-// 	];
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+	try {
+		const cookies = nookies.get(ctx);
+		const token = await admin.auth().verifyIdToken(cookies.token);
 
-// 	return {
-// 		props: {
-// 			messages: messages,
-// 		},
-// 	};
-// };
+		const { uid } = token;
 
-// type SupportProps = {
-// 	messages: { isAssistant: boolean; content: string; timestamp: string }[];
-// };
+		return {
+			props: {},
+		};
+	} catch (err) {
+		ctx.res.writeHead(302, { Location: "/auth" });
+		ctx.res.end();
+
+		return { props: {} as never };
+	}
+};
 
 function Support() {
 	const [messageData, setMessageData] = useState([
@@ -60,3 +55,30 @@ function Support() {
 }
 
 export default Support;
+
+// for later iterations
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+// 	const messages = [
+// 		{
+// 			isAssistant: true,
+// 			content:
+// 				"Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam minima repudiandae accusamus sequi est cumque voluptate, quia laboriosam nostrum veniam illo accusantium iusto officiis nam dignissimos culpa hic obcaecati. Maiores.",
+// 			timestamp: new Date().toJSON(),
+// 		},
+// 		{
+// 			isAssistant: false,
+// 			content: "nam dignissimos culpa hic obcaecati. Maiores.",
+// 			timestamp: new Date().toJSON(),
+// 		},
+// 	];
+
+// 	return {
+// 		props: {
+// 			messages: messages,
+// 		},
+// 	};
+// };
+
+// type SupportProps = {
+// 	messages: { isAssistant: boolean; content: string; timestamp: string }[];
+// };
