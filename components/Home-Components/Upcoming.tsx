@@ -16,7 +16,6 @@ const Upcoming = ({ upcomingEvents }: any) => {
   }
 
 
-
   return (
     <Stack mih={"100%"}>
 

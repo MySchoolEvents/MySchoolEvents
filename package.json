@@ -21,6 +21,7 @@
     "@types/react-dom": "18.0.11",
     "chatgpt": "^5.0.9",
     "dotenv": "^16.0.3",
+    "barcode-react-scanner": "^1.2.0",
     "eslint": "8.35.0",
     "eslint-config-next": "13.2.3",
     "firebase": "^9.17.2",
@@ -31,7 +32,9 @@
     "react-dom": "18.2.0",
     "typescript": "4.9.5",
     "typewriter-effect": "^2.19.0",
-    "uuidv4": "^6.2.13"
+    "uuidv4": "^6.2.13",
+    "react-qr-barcode-scanner": "^1.0.6",
+    "react-qr-code": "^2.0.11"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",

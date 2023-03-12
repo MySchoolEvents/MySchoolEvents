@@ -12,13 +12,14 @@ import {
 	deleteDoc,
 } from "firebase/firestore";
 import { db } from "../firebase/config";
+import { getDateNumber } from "./EventsDateConverter";
 
 export async function getUpcomingEvents() {
 	// upcoming events from firestore
 	//
 	const eventsRef = collection(db, "school-events");
 
-	const q = query(eventsRef, where("startTime", ">", 309));
+  const q = query(eventsRef, where("startTime", ">", getDateNumber()))
 
 	const querySnapshot = await getDocs(q);
 
@@ -44,7 +45,7 @@ export async function getCurrentEvents() {
 	//
 	const eventsRef = collection(db, "school-events");
 
-	const q = query(eventsRef, where("startTime", "==", 309), limit(10));
+  const q = query(eventsRef, where("startTime", "==", getDateNumber()), limit(10))
 
 	const querySnapshot = await getDocs(q);
 
@@ -53,7 +54,6 @@ export async function getCurrentEvents() {
 	querySnapshot.forEach((doc) => {
 		documentArray.push(doc.data());
 	});
-
 	return documentArray;
 }
 
