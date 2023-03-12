@@ -138,9 +138,11 @@ export function EventTable({ events, totalEvents }: TableSortProps) {
 
   useEffect(() => {
 
+    console.log(search.length)
+
     if (search.length == 0) {
       setData(events)
-      setSortedData(events)
+      setSortedData(data)
 
     }
 
@@ -156,7 +158,9 @@ export function EventTable({ events, totalEvents }: TableSortProps) {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.currentTarget;
     setSearch(value);
-    setSortedData(sortData(totalEvents, { sortBy, reversed: reverseSortDirection, search: value }));
+    const sortedData = sortData(totalEvents, { sortBy, reversed: reverseSortDirection, search: value }).slice(0, 9);
+    setSortedData(sortedData);
+
   };
 
   const rows = sortedData.map((row) => (
@@ -215,7 +219,7 @@ export function EventTable({ events, totalEvents }: TableSortProps) {
             rows
           ) : (
             <tr style={{ padding: 40 }}>
-              <td colSpan={Object.keys(data[0]).length}>
+              <td colSpan={Object.keys(data[0]).length ?? 4}>
                 <Text weight={500} align="center">
                   Nothing found
                 </Text>
