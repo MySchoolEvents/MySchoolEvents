@@ -7,6 +7,7 @@ import { getCurrentEvents, getHomeScreenEvents, getPastEvents, getUpcomingEvents
 import { GetServerSideProps } from 'next';
 import Upcoming from './Upcoming';
 import Past from './Past';
+import Current from './Current';
 
 
 
@@ -14,7 +15,6 @@ export default function HomeContent(props: { upcoming: any[], current: any[], pa
 
   return (
     <Stack>
-
       <Group position='apart'>
         <Stack spacing={0} mb={7}>
           <Title
@@ -53,14 +53,15 @@ export default function HomeContent(props: { upcoming: any[], current: any[], pa
 
         <Tabs.Panel value="upcoming" pt="xs">
 
-          <Upcoming upcomingEvents={props.upcoming} />
+          {/* <Upcoming upcomingEvents={props.upcoming ?? []} /> */}
 
         </Tabs.Panel>
 
         <Tabs.Panel value="current" pt="xs">
+          <Current currentEvents={props.current ?? []} />
         </Tabs.Panel>
         <Tabs.Panel value="past" pt="xs">
-          <Past pastEvents={props.past} />
+          {/* <Past pastEvents={props.past ?? []} /> */}
         </Tabs.Panel>
       </Tabs>
     </Stack>
