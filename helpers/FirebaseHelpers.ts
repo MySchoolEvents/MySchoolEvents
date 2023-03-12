@@ -45,7 +45,7 @@ export async function getCurrentEvents() {
 	//
 	const eventsRef = collection(db, "school-events");
 
-	const q = query(eventsRef, where("startTime", "==", 309), limit(10));
+  const q = query(eventsRef, where("startTime", "==", getDateNumber()), limit(10))
 
 	const querySnapshot = await getDocs(q);
 

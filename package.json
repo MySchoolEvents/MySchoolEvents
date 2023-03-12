@@ -34,8 +34,7 @@
     "typewriter-effect": "^2.19.0",
     "uuidv4": "^6.2.13",
     "react-qr-barcode-scanner": "^1.0.6",
-    "react-qr-code": "^2.0.11",
-    "react-webcam-barcode-scanner": "^0.0.2-rc2"
+    "react-qr-code": "^2.0.11"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
