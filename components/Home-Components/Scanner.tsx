@@ -1,19 +1,17 @@
 import React, { useState } from "react";
 import BarCodeScanner from 'barcode-react-scanner';
+import { Center, Flex, Group } from "@mantine/core";
 
-function Scanner() {
-  const [code, setCode] = useState<string>('')
+function Scanner({ setID }: { setID: any }) {
 
   return (
-    <>
-      {code && <p> {code} </p>}
-      <BarCodeScanner onUpdate={(err, resp): void => {
-        if (resp) {
-          setCode(resp.getText())
-        }
-      }}
-      />
-    </>
+    <BarCodeScanner onUpdate={(err, resp): void => {
+      if (resp && resp.getText().length == 6) {
+        console.log(resp.getText())
+        setID(resp.getText())
+      }
+    }}
+    />
   );
 }
 export default Scanner;
