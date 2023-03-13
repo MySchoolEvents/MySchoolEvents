@@ -152,7 +152,7 @@ function EditCourseModal(props: {
 					order={4}
 					align="center"
 				>
-					Edit a course
+					Edit course
 				</Title>
 				<TextInput
 					value={courseTitle}
@@ -213,7 +213,7 @@ function EditCourseModal(props: {
 						handleCourseEdit();
 					}}
 				>
-					Edit Course
+					Save
 				</Button>
 				<Button
 					color="red"

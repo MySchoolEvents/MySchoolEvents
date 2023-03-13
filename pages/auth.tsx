@@ -41,10 +41,10 @@ export default function AuthPage() {
 	};
 
 	useEffect(() => {
-		// if (user != null) {
-		// 	// redirect to home page after user successfully logs in
-		// 	router.push("/");
-		// }
+		if (user != null) {
+			// redirect to home page after user successfully logs in
+			router.push("/");
+		}
 	}, [user]);
 
 	return (
@@ -85,12 +85,6 @@ export default function AuthPage() {
 									</Button>
 								</Center>
 							</Stack>
-
-							{user && (
-								<Button color="red" onClick={handleSignOut}>
-									Log Out
-								</Button>
-							)}
 						</Stack>
 					</Paper>
 				</Container>
