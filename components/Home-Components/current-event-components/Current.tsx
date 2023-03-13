@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Children, useEffect, useState } from 'react'
 import { Button, Center, Modal, Stack, Text } from '@mantine/core';
 import Scanner from '../Scanner';
 import dynamic from 'next/dynamic';
@@ -27,36 +27,37 @@ const Current = ({ currentEvents, user }: any) => {
 
 
   return (
+		<>
+			{/**/}
+			{/*   setShowBarcode(false) */}
+			{/**/}
+			{/* }}> */}
+			{/*   <DynamicComponentWithNoSSR /> */}
+			{/* </Modal> */}
 
-
-
-    <>
-
-      {/**/}
-      {/*   setShowBarcode(false) */}
-      {/**/}
-      {/* }}> */}
-      {/*   <DynamicComponentWithNoSSR /> */}
-      {/* </Modal> */}
-
-      <Stack>
-        <Center>
-          <Stack w="70%" mt="xl">
-            {
-              currentEvents.map((event: any) => {
-                return (
-                  <CurrentEventsCard event={event} user={user} title={event.name} location={event.location} group={event.group} start={event.startTime} end={event.endTime} />
-                )
-              })
-
-            }
-          </Stack>
-        </Center>
-
-      </Stack >
-    </>
-
-  );
+			<Stack>
+				<Center>
+					<Stack w="70%" mt="xl">
+						{Children.toArray(
+							currentEvents.map((event: any) => {
+								return (
+									<CurrentEventsCard
+										event={event}
+										user={user}
+										title={event.name}
+										location={event.location}
+										group={event.group}
+										start={event.startTime}
+										end={event.endTime}
+									/>
+								);
+							})
+						)}
+					</Stack>
+				</Center>
+			</Stack>
+		</>
+	);
 }
 
 export default Current

@@ -1,4 +1,5 @@
 import { UserAuth } from "@/context/AuthContext";
+import { convertURLToName } from "@/helpers/utils";
 import {
 	createStyles,
 	Card,
@@ -7,7 +8,13 @@ import {
 	Button,
 	SimpleGrid,
 	Container,
+	Center,
+	Stack,
+	Group,
+	Divider,
+	Badge,
 } from "@mantine/core";
+import { IconMail } from "@tabler/icons";
 import { useRouter } from "next/router";
 
 const useStyles = createStyles((theme) => ({
@@ -24,8 +31,9 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface UserContentProps {
-	avatar: string | null | undefined;
-	name: string | null | undefined;
+	avatar: string;
+	name: string;
+	email: string;
 	role: string;
 	numberOfCourses: number;
 }
@@ -35,6 +43,7 @@ export function UserContent({
 	name,
 	role,
 	numberOfCourses,
+	email,
 }: UserContentProps) {
 	const { classes } = useStyles();
 	const { logOut } = UserAuth();
@@ -73,30 +82,26 @@ export function UserContent({
 				>
 					{role}
 				</Text>
-				<SimpleGrid mt="md" spacing={0}>
-					<Text
-						ta="center"
-						fz="xl"
-						fw={500}
-						sx={(theme) => ({
-							fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-							fontWeight: 700,
-						})}
-					>
-						{numberOfCourses}
-					</Text>
-					<Text
-						ta="center"
-						fz="sm"
-						c="dimmed"
-						sx={(theme) => ({
-							fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-							fontWeight: 700,
-						})}
-					>
-						Courses
-					</Text>
-				</SimpleGrid>
+				<Center>
+					<Badge color="blue" mt="sm">{numberOfCourses} courses</Badge>
+				</Center>
+				<Center mt="md">
+					<Stack>
+						<Group>
+							<IconMail />
+							<Text
+								ta="left"
+								fz="sm"
+								fw={400}
+								sx={(theme) => ({
+									fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+								})}
+							>
+								{email}
+							</Text>
+						</Group>
+					</Stack>
+				</Center>
 				<Button
 					fullWidth
 					radius="md"
@@ -108,8 +113,8 @@ export function UserContent({
 						fontWeight: 700,
 					})}
 					onClick={() => {
-                        router.push("/auth");
-                        logOut();
+						router.push("/auth");
+						logOut();
 					}}
 				>
 					Log Out

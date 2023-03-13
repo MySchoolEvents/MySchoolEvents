@@ -1,17 +1,4 @@
 import Head from "next/head";
-import styles from "@/styles/Home.module.css";
-import {
-	Stack,
-	Avatar,
-	AppShell,
-	Navbar,
-	Text,
-	ActionIcon,
-	Group,
-	Tooltip,
-} from "@mantine/core";
-import CustomNavbar from "@/components/Navbar";
-import { IconChevronLeft } from "@tabler/icons";
 import CustomAppShell from "@/components/CustomAppShell";
 import React from "react";
 import nookies from "nookies";
@@ -20,6 +7,7 @@ import { admin } from "@/firebase/admin";
 import { UserContent } from "@/components/user-components/UserContent";
 import { UserAuth } from "@/context/AuthContext";
 import { loadCourses } from "@/helpers/FirebaseHelpers";
+import { convertURLToName } from "@/helpers/utils";
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 	try {
@@ -57,9 +45,10 @@ export default function User(props: { numberOfCourses: number }) {
 				<CustomAppShell selectedTab="user">
 					<UserContent
 						role="Student"
-						avatar={user?.photoURL}
-						name={user?.displayName}
+						avatar={user?.photoURL ?? ""}
+						name={user?.displayName ?? ""}
 						numberOfCourses={props.numberOfCourses}
+						email={user?.email ?? ""}
 					/>
 				</CustomAppShell>
 			</main>

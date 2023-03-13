@@ -14,7 +14,7 @@ import Current from './current-event-components/Current';
 export default function HomeContent(props: { upcoming: any[], current: any[], past: any[], user: any }) {
 
   return (
-    <Stack>
+    <Stack m="md">
       <Group position='apart'>
         <Stack spacing={0} mb={7}>
           <Title
@@ -36,9 +36,6 @@ export default function HomeContent(props: { upcoming: any[], current: any[], pa
             {getCurrentDateOrdinalSuffixes()}
           </Title>
         </Stack>
-        {/* <ActionIcon size="xl" variant="filled" color="blue" radius="xl"> */}
-        {/*   <IconPlus /> */}
-        {/* </ActionIcon> */}
 
       </Group>
 
