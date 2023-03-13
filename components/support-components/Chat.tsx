@@ -71,7 +71,7 @@ function Chat({ messages, setMessages }: ChatProps) {
 		];
 		setMessages(messagesClone);
 		setChatInput("");
-		const chatHistory = conversationHistory.concat(` User: '${chatInput}'`);
+		let chatHistory = conversationHistory.concat(` User: '${chatInput}'`);
 
 		fetch("/api/chat", {
 			method: "post",

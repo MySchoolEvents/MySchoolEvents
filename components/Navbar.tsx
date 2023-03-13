@@ -20,7 +20,7 @@ function CustomNavbar({ selectedTab }: Props) {
 	return (
 		<Center h="100%">
 			<Stack spacing={60} w="100%" mr="xs">
-				<UserAvatar />
+				<UserAvatar isSelected={selectedTab === "user"} />
 
 				<Link href={`/`}>
 					<UnstyledButton>

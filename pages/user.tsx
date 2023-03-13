@@ -17,6 +17,9 @@ import React from "react";
 import nookies from "nookies";
 import { GetServerSidePropsContext } from "next";
 import { admin } from "@/firebase/admin";
+import { UserContent } from "@/components/user-components/UserContent";
+import { UserAuth } from "@/context/AuthContext";
+import { loadCourses } from "@/helpers/FirebaseHelpers";
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 	try {
@@ -25,29 +28,40 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
 		// the user is authenticated!
 		const { uid } = token;
+		const courses = await loadCourses(uid);
+		const numberOfCourses = courses.length;
 
 		return {
-			props: {},
+			props: { numberOfCourses: numberOfCourses },
 		};
 	} catch (err) {
 		ctx.res.writeHead(302, { Location: "/auth" });
 		ctx.res.end();
-		
+
 		return { props: {} as never };
 	}
 };
 
-export default function Settings() {
+export default function User(props: { numberOfCourses: number }) {
+	const { user } = UserAuth();
+
 	return (
 		<>
 			<Head>
-				<title>Settings</title>
-				<meta name="description" content="Settings Page" />
+				<title>User</title>
+				<meta name="description" content="User Page" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<main>
-				<CustomAppShell selectedTab="settings">settings</CustomAppShell>
+				<CustomAppShell selectedTab="user">
+					<UserContent
+						role="Student"
+						avatar={user?.photoURL}
+						name={user?.displayName}
+						numberOfCourses={props.numberOfCourses}
+					/>
+				</CustomAppShell>
 			</main>
 		</>
 	);
