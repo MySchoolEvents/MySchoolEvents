@@ -1,134 +1,136 @@
 import {
-	collection,
-	getDocs,
-	where,
-	query,
-	limit,
-	updateDoc,
-	serverTimestamp,
-	doc,
-	setDoc,
-	getDoc,
-	deleteDoc,
+  collection,
+  getDocs,
+  where,
+  query,
+  limit,
+  updateDoc,
+  serverTimestamp,
+  doc,
+  setDoc,
+  getDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { db } from "../firebase/config";
 import { getDateNumber } from "./EventsDateConverter";
 
 export async function getUpcomingEvents() {
-	// upcoming events from firestore
-	//
-	const eventsRef = collection(db, "school-events");
+  // upcoming events from firestore
+  //
+  const eventsRef = collection(db, "school-events");
 
-  const q = query(eventsRef, where("startTime", ">", getDateNumber()))
+  const q = query(eventsRef, where("startTime", ">", getDateNumber()), limit(30))
 
-	const querySnapshot = await getDocs(q);
+  const querySnapshot = await getDocs(q);
 
-	const documentArray: any[] = [];
+  const documentArray: any[] = [];
 
-	querySnapshot.forEach((doc) => {
-		documentArray.push(doc.data());
-	});
+  querySnapshot.forEach((doc) => {
+    documentArray.push(doc.data());
+  });
 
-	return documentArray;
+  return documentArray;
 }
 
 export async function getHomeScreenEvents() {
-	const upcoming = await getUpcomingEvents();
-	const past = await getPastEvents();
-	const current = await getCurrentEvents();
+  const upcoming = await getUpcomingEvents();
+  const past = await getPastEvents();
+  const current = await getCurrentEvents();
 
-	return { upcoming: upcoming, past: past, current: current };
+  return { upcoming: upcoming, past: past, current: current };
 }
 
 export async function getCurrentEvents() {
-	// upcoming events from firestore
-	//
-	const eventsRef = collection(db, "school-events");
+  // upcoming events from firestore
+  //
+  const eventsRef = collection(db, "school-events");
 
   const q = query(eventsRef, where("startTime", "==", getDateNumber()), limit(10))
 
-	const querySnapshot = await getDocs(q);
+  const querySnapshot = await getDocs(q);
 
-	const documentArray: any[] = [];
+  const documentArray: any[] = [];
 
-	querySnapshot.forEach((doc) => {
-		documentArray.push(doc.data());
-	});
-	return documentArray;
+  querySnapshot.forEach((doc) => {
+    const event = doc.data()
+    event.id = doc.id
+    documentArray.push(event)
+  });
+  return documentArray;
 }
 
 export async function getPastEvents() {
-	// upcoming events from firestore
-	//
-	const eventsRef = collection(db, "school-events");
+  // upcoming events from firestore
+  //
+  const eventsRef = collection(db, "school-events");
 
-	const q = query(eventsRef, where("startTime", "<", 309), limit(50));
+  const q = query(eventsRef, where("startTime", "<", 309), limit(30));
 
-	const querySnapshot = await getDocs(q);
-	const documentArray: any[] = [];
+  const querySnapshot = await getDocs(q);
+  const documentArray: any[] = [];
 
-	querySnapshot.forEach((doc) => {
-		documentArray.push(doc.data());
-	});
+  querySnapshot.forEach((doc) => {
+    documentArray.push(doc.data());
+  });
 
-	return documentArray;
+  return documentArray;
 }
 
 // load courses from firestore
 export async function loadCourses(userID: string) {
-	const coursesRef = collection(db, "users", userID, "courses");
-	const querySnapshot = await getDocs(coursesRef);
+  const coursesRef = collection(db, "users", userID, "courses");
+  const querySnapshot = await getDocs(coursesRef);
 
-	const coursesArray: any[] = [];
+  const coursesArray: any[] = [];
 
-	querySnapshot.forEach((doc) => {
-		coursesArray.push(doc.data());
-	});
+  querySnapshot.forEach((doc) => {
+    coursesArray.push(doc.data());
+  });
 
-	return coursesArray;
+  return coursesArray;
 }
 
 // create a new course in firestore
 export async function createCourse(
-	userID: string,
-	courseID: string,
-	title: string,
-	teacher: string,
-	previewIconIndex: number,
-	backgroundColorIndex: number
+  userID: string,
+  courseID: string,
+  title: string,
+  teacher: string,
+  previewIconIndex: number,
+  backgroundColorIndex: number
 ) {
-	const courseRef = doc(db, "users", userID, "courses", courseID);
-	try {
-		await setDoc(courseRef, {
-			title: title,
-			teacher: teacher,
-			previewIconIndex: previewIconIndex,
-			backgroundColorIndex: backgroundColorIndex,
-			id: courseID,
-		});
-	} catch (error) {
-		console.log(error);
-	}
+  const courseRef = doc(db, "users", userID, "courses", courseID);
+  try {
+    await setDoc(courseRef, {
+      title: title,
+      teacher: teacher,
+      previewIconIndex: previewIconIndex,
+      backgroundColorIndex: backgroundColorIndex,
+      id: courseID,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 // edit a course in firestore
 export async function editCourse(
-	userID: string,
-	courseID: string,
-	title: string,
-	teacher: string,
-	previewIconIndex: number
+  userID: string,
+  courseID: string,
+  title: string,
+  teacher: string,
+  previewIconIndex: number
 ) {
-	const courseRef = doc(db, "users", userID, "courses", courseID);
-	try {
-		await updateDoc(courseRef, {
-			title: title,
-			teacher: teacher,
-			previewIconIndex: previewIconIndex,
-		});
-	} catch (error) {
-		console.log(error);
-	}
+  const courseRef = doc(db, "users", userID, "courses", courseID);
+  try {
+    await updateDoc(courseRef, {
+      title: title,
+      teacher: teacher,
+      previewIconIndex: previewIconIndex,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 // remove a course from firestore
