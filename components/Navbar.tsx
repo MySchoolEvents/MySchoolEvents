@@ -8,7 +8,12 @@ import {
 	UnstyledButton,
 } from "@mantine/core";
 import React, { useState } from "react";
-import { IconHomeStar, IconSettings, IconBooks, IconMessageCircle2 } from "@tabler/icons";
+import {
+	IconHomeStar,
+	IconSettings,
+	IconBooks,
+	IconMessageCircle2,
+} from "@tabler/icons";
 import Link from "next/link";
 import { UserAvatar } from "./UserAvatar";
 
@@ -19,9 +24,10 @@ type Props = {
 function CustomNavbar({ selectedTab }: Props) {
 	return (
 		<Center h="100%">
-			<Stack spacing={60} w="100%" mr="xs">
-				<UserAvatar isSelected={selectedTab === "user"} />
-
+			<Stack spacing={60} mr="sm">
+				<Center>
+					<UserAvatar isSelected={selectedTab === "user"} />
+				</Center>
 				<Link href={`/`}>
 					<UnstyledButton>
 						<Group position="center">

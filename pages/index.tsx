@@ -35,7 +35,16 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     // const user = removeUndefinedKeys(userCopy)
     // @ts-ignore
 
-    const events = await getHomeScreenEvents();
+    let events = await getHomeScreenEvents();
+
+    let currentEventsCopy = [...events.current]
+
+    //sort current events from smallest length to longest
+    currentEventsCopy.sort((a: any, b: any) => {
+      return a.endTime - b.endTime
+    })
+
+    events.current = currentEventsCopy;
 
 
     return {
@@ -55,7 +64,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
 export default function Home({ events, user }: any) {
 
-  console.log(user)
   return (
     <>
       <Head>

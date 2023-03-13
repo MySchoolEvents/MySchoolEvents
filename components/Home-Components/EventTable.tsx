@@ -138,8 +138,6 @@ export function EventTable({ events, totalEvents }: TableSortProps) {
 
   useEffect(() => {
 
-    console.log(search.length)
-
     if (search.length == 0) {
       setData(events)
       setSortedData(data)
