@@ -41,7 +41,7 @@ export function CurrentEventsCard({ user, title, location, group, end, start, ev
     <>
 
       <Modal fullScreen opened={openEventModal} onClose={() => setOpenEventModal(false)}>
-        <CurrentEventModal user={user} event={event} />
+        <CurrentEventModal user={user} event={event} openEventModal={openEventModal} />
 
       </Modal>
 
@@ -55,7 +55,7 @@ export function CurrentEventsCard({ user, title, location, group, end, start, ev
           <Badge>{getDateLength()}</Badge>
         </Group>
 
-        <Text fz="sm" c="dimmed" mt={5}>
+        <Text fz="sm" c="dimmed" mt={5} ml="sm">
           {location + " " + group}
         </Text>
 
