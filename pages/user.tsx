@@ -6,7 +6,7 @@ import { GetServerSidePropsContext } from "next";
 import { admin } from "@/firebase/admin";
 import { UserContent } from "@/components/user-components/UserContent";
 import { UserAuth } from "@/context/AuthContext";
-import { loadCourses } from "@/helpers/FirebaseHelpers";
+import { getUserData, loadCourses } from "@/helpers/FirebaseHelpers";
 import { convertURLToName } from "@/helpers/utils";
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
@@ -17,10 +17,12 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 		// the user is authenticated!
 		const { uid } = token;
 		const courses = await loadCourses(uid);
+		const data = await getUserData(uid);
+		const userData = data;
 		const numberOfCourses = courses.length;
 
 		return {
-			props: { numberOfCourses: numberOfCourses },
+			props: { numberOfCourses: numberOfCourses, userData: userData },
 		};
 	} catch (err) {
 		ctx.res.writeHead(302, { Location: "/auth" });
@@ -30,7 +32,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 	}
 };
 
-export default function User(props: { numberOfCourses: number }) {
+export default function User(props: { numberOfCourses: number, userData: any }) {
 	const { user } = UserAuth();
 
 	return (
@@ -49,6 +51,7 @@ export default function User(props: { numberOfCourses: number }) {
 						name={user?.displayName ?? ""}
 						numberOfCourses={props.numberOfCourses}
 						email={user?.email ?? ""}
+						userData={props.userData}
 					/>
 				</CustomAppShell>
 			</main>

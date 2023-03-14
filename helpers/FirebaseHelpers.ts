@@ -204,3 +204,24 @@ export async function removeCourse(userID: string, courseID: string) {
     console.log(error);
   }
 }
+
+// set grade field for a specific user in firestore
+export async function updateGrade(userID: string, grade: string) {
+	const userRef = doc(db, "users", userID);
+
+  // try to update grade field in user doc
+	try {
+		await updateDoc(userRef, {
+			grade: grade,
+		});
+	} catch (error) {
+    // if user doc doesn't exist, create it and set grade field
+		try {
+			await setDoc(userRef, {
+				grade: grade,
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	}
+}

@@ -1,5 +1,9 @@
 import { UserAuth } from "@/context/AuthContext";
-import { convertURLToName, getCurrentDateOrdinalSuffixes } from "@/helpers/utils";
+import {
+	convertURLToName,
+	getCurrentDateOrdinalSuffixes,
+	getOrdinalSuffixes,
+} from "@/helpers/utils";
 import {
 	createStyles,
 	Card,
@@ -12,9 +16,8 @@ import {
 	Group,
 	Badge,
 	Title,
-	
 } from "@mantine/core";
-import { IconMail } from "@tabler/icons";
+import { IconId, IconMail, IconSchool } from "@tabler/icons";
 import { useRouter } from "next/router";
 
 const useStyles = createStyles((theme) => ({
@@ -36,6 +39,7 @@ interface UserContentProps {
 	email: string;
 	role: string;
 	numberOfCourses: number;
+	userData: any;
 }
 
 export function UserContent({
@@ -44,6 +48,7 @@ export function UserContent({
 	role,
 	numberOfCourses,
 	email,
+	userData,
 }: UserContentProps) {
 	const { classes } = useStyles();
 	const { logOut } = UserAuth();
@@ -53,98 +58,117 @@ export function UserContent({
 		<Stack m="md">
 			{/* course activity header */}
 			<Group position="apart">
-					<Stack spacing={0}>
-						<Title
-							sx={(theme) => ({
-								fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-								fontWeight: 900,
-							})}
-						>
-							User Profile
-						</Title>
-						<Title
-							sx={(theme) => ({
-								fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-								fontWeight: 700,
-							})}
-							color="blue"
-							order={2}
-						>
-							{getCurrentDateOrdinalSuffixes()}
-						</Title>
-					</Stack>
-				</Group>
-		<Container style={{ transform: "translateY(25%)", width: 450 }}>
-			<Card withBorder p="xl" radius="md" className={classes.card}>
-				<Avatar
-					src={avatar}
-					size={"xl"}
-					radius={80}
-					mx="auto"
-					className={classes.avatar}
-				/>
-				<Text
-					ta="center"
-					fz="lg"
-					fw={500}
-					mt="sm"
-					sx={(theme) => ({
-						fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-						fontWeight: 700,
-					})}
-				>
-					{name}
-				</Text>
-				<Text
-					ta="center"
-					fz="sm"
-					c="dimmed"
-					sx={(theme) => ({
-						fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-						fontWeight: 700,
-					})}
-				>
-					{role}
-				</Text>
-				<Center>
-					<Badge color="blue" mt="sm">{numberOfCourses} courses</Badge>
-				</Center>
-				<Center mt="md">
-					<Stack>
-						<Group>
-							<IconMail />
-							<Text
-								ta="left"
-								fz="sm"
-								fw={400}
-								sx={(theme) => ({
-									fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-								})}
-							>
-								{email}
-							</Text>
-						</Group>
-					</Stack>
-				</Center>
-				<Button
-					fullWidth
-					radius="md"
-					mt="xl"
-					size="md"
-					color={"red"}
-					sx={(theme) => ({
-						fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-						fontWeight: 700,
-					})}
-					onClick={() => {
-						router.push("/auth");
-						logOut();
-					}}
-				>
-					Log Out
-				</Button>
-			</Card>
-		</Container>
+				<Stack spacing={0}>
+					<Title
+						sx={(theme) => ({
+							fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+							fontWeight: 900,
+						})}
+					>
+						User Profile
+					</Title>
+					<Title
+						sx={(theme) => ({
+							fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+							fontWeight: 700,
+						})}
+						color="blue"
+						order={2}
+					>
+						{getCurrentDateOrdinalSuffixes()}
+					</Title>
+				</Stack>
+			</Group>
+			<Container style={{ transform: "translateY(25%)", width: 450 }}>
+				<Card withBorder p="xl" radius="md" className={classes.card}>
+					<Avatar
+						src={avatar}
+						size={"xl"}
+						radius={80}
+						mx="auto"
+						className={classes.avatar}
+					/>
+					<Text
+						ta="center"
+						fz="lg"
+						mt="sm"
+						sx={(theme) => ({
+							fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+							fontWeight: 700,
+						})}
+					>
+						{name}
+					</Text>
+					<Text
+						ta="center"
+						fz="sm"
+						c="dimmed"
+						sx={(theme) => ({
+							fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+							fontWeight: 700,
+						})}
+					>
+						{role}
+					</Text>
+					<Center>
+						<Badge color="blue" mt="sm" size="lg">
+							{numberOfCourses} courses
+						</Badge>
+						<Badge color="blue" mt="sm" size="lg">
+							{userData ? userData.points ?? 0 : 0} points
+						</Badge>
+					</Center>
+					<Center mt="md">
+						<Stack>
+							{userData.grade && (
+								<Group>
+									<IconSchool size="2rem" />
+									<Text
+										ta="left"
+										fz="sm"
+										fw={500}
+										sx={(theme) => ({
+											fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+										})}
+									>
+										{userData.grade}{getOrdinalSuffixes(userData.grade)} grade
+									</Text>
+								</Group>
+							)}
+							<Group>
+								<IconId size="2rem" />
+								<Text
+									ta="left"
+									fz="sm"
+									fw={500}
+									sx={(theme) => ({
+										fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+									})}
+								>
+									{email.split("@")[0]}
+								</Text>
+							</Group>
+						</Stack>
+					</Center>
+					<Button
+						fullWidth
+						radius="md"
+						mt="xl"
+						size="md"
+						color={"red"}
+						sx={(theme) => ({
+							fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+							fontWeight: 700,
+						})}
+						onClick={() => {
+							router.push("/auth");
+							logOut();
+						}}
+					>
+						Log Out
+					</Button>
+				</Card>
+			</Container>
 		</Stack>
 	);
 }
