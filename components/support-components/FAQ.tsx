@@ -1,4 +1,10 @@
-import { Container, Accordion, createStyles, Title } from "@mantine/core";
+import {
+	Container,
+	Accordion,
+	createStyles,
+	Title,
+	Anchor,
+} from "@mantine/core";
 
 const useStyles = createStyles((theme) => ({
 	wrapper: {
@@ -15,9 +21,6 @@ const useStyles = createStyles((theme) => ({
 	},
 }));
 
-const placeholder =
-	"It can’t help but hear a pin drop from over half a mile away, so it lives deep in the mountains where there aren’t many people or Pokémon.";
-
 function FAQ() {
 	const { classes } = useStyles();
 	return (
@@ -33,12 +36,8 @@ function FAQ() {
 				Frequently Asked Questions
 			</Title>
 
-			<Accordion
-				chevronPosition="right"
-				defaultValue="reset-password"
-				variant="separated"
-			>
-				<Accordion.Item className={classes.item} value="reset-password">
+			<Accordion chevronPosition="right" defaultValue="faq" variant="separated">
+				<Accordion.Item className={classes.item} value="sign-up">
 					<Accordion.Control>
 						How do I sign up for My School Events?
 					</Accordion.Control>
@@ -46,35 +45,51 @@ function FAQ() {
 					ensure an easy migration process for schools and seamless sign-in for users.`}</Accordion.Panel>
 				</Accordion.Item>
 
-				<Accordion.Item className={classes.item} value="another-account">
+				<Accordion.Item className={classes.item} value="id-scanner">
 					<Accordion.Control>
-						Can I create more that one account?
+						{`Why isn't the student ID scanner working?`}
 					</Accordion.Control>
-					<Accordion.Panel>{placeholder}</Accordion.Panel>
+					<Accordion.Panel>{`There may be a multitude of reasons for this. Try taking your ID out of any lanyards or coverings that 
+					may be obscuring the full barcode. Similarly, make sure the ID is in full view of the camera and try not to shake or move 
+					your hand. If all else fails, you can close the modal and try again later, or contact support.`}</Accordion.Panel>
 				</Accordion.Item>
 
 				<Accordion.Item className={classes.item} value="newsletter">
 					<Accordion.Control>
-						How can I subscribe to monthly newsletter?
+						{`Help! I can't find an event I'm looking for...`}
 					</Accordion.Control>
-					<Accordion.Panel>{placeholder}</Accordion.Panel>
+					<Accordion.Panel>{`You can find events in the home page. If the event you're looking for is currently ongoing,
+					you should be able to find it in the current events tab. It may have already occurred, in which case you'll find it 
+					in the past events tab. Similarly, if it hasn't happened yet, you can find it in the upcoming events tab. Both the upcoming 
+					and past tables have a search bar, so you should be able to find it easily. If not, feel free to ask the chatbot 
+					for help or contact support.`}</Accordion.Panel>
 				</Accordion.Item>
 
 				<Accordion.Item className={classes.item} value="credit-card">
 					<Accordion.Control>
-						Do you store credit card information securely?
+						Do you store information securely?
 					</Accordion.Control>
-					<Accordion.Panel>{placeholder}</Accordion.Panel>
+					<Accordion.Panel>{`Yes! We store all of our information on Google's cloud computing service Firebase. All passwords are salted, hashed and 
+					secure. Your information is accessible through a NoSQL database that allows us to easily store, sync and query data.`}</Accordion.Panel>
 				</Accordion.Item>
 
-				<Accordion.Item className={classes.item} value="payment">
+				<Accordion.Item className={classes.item} value="technical-support">
 					<Accordion.Control>
 						How can I contact technical support if I have a problem with the
 						application?
 					</Accordion.Control>
-					<Accordion.Panel>{`We have an intelligent support chatbot that is designed 
-					to help users with any queries they might have regarding My School Events. 
-					Alternatively, you can email support at devaidanbunch@gmail.com or devderekhsieh@gmail.com.`}</Accordion.Panel>
+					<Accordion.Panel>
+						{`We have an intelligent support chatbot that is designed 
+					to help users with any queries they might have regarding My School Events. This is located in the AI Chat tab
+					on the top left corner of your screen. Alternatively, you can email support at the following addresses: `}
+						<Anchor href="mailto: devaidanbunch@gmail.com">
+							devaidanbunch@gmail.com
+						</Anchor>
+						{` or `}
+						<Anchor href="mailto: devderekhsieh@gmail.com">
+							devderekhsieh@gmail.com.
+						</Anchor>
+					</Accordion.Panel>
 				</Accordion.Item>
 			</Accordion>
 		</Container>
