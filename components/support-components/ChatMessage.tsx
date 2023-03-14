@@ -60,7 +60,6 @@ function ChatMessage(props: {
 													typewriter
 														.typeString(props.message)
 														.callFunction(() => {
-															console.log("String typed out!");
 															setAssistantTypingFinished(true);
 															props.setAssistantTypingChange(
 																!props.assistantTypingChange
@@ -95,6 +94,9 @@ function ChatMessage(props: {
 							size="xs"
 							align={position}
 							color="dimmed"
+							sx={(theme) => ({
+								fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+							})}
 							ml={props.isAssistant ? 50 : 0}
 						>
 							{props.timestamp}

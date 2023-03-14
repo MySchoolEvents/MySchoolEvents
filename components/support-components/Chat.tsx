@@ -34,8 +34,6 @@ function Chat({ messages, setMessages }: ChatProps) {
 		scrollRef.current?.scrollIntoView({ behavior: "smooth" });
 	}, [messages, assistantTypingChange]);
 
-	useEffect;
-
 	const handleNewTopic = () => {
 		setChatInput("");
 		setConversationHistory(

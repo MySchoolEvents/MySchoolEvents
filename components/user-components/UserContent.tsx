@@ -1,18 +1,18 @@
 import { UserAuth } from "@/context/AuthContext";
-import { convertURLToName } from "@/helpers/utils";
+import { convertURLToName, getCurrentDateOrdinalSuffixes } from "@/helpers/utils";
 import {
 	createStyles,
 	Card,
 	Avatar,
 	Text,
 	Button,
-	SimpleGrid,
 	Container,
 	Center,
 	Stack,
 	Group,
-	Divider,
 	Badge,
+	Title,
+	
 } from "@mantine/core";
 import { IconMail } from "@tabler/icons";
 import { useRouter } from "next/router";
@@ -50,7 +50,31 @@ export function UserContent({
 	const router = useRouter();
 
 	return (
-		<Container style={{ transform: "translateY(50%)", width: 450 }}>
+		<Stack m="md">
+			{/* course activity header */}
+			<Group position="apart">
+					<Stack spacing={0}>
+						<Title
+							sx={(theme) => ({
+								fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+								fontWeight: 900,
+							})}
+						>
+							User Profile
+						</Title>
+						<Title
+							sx={(theme) => ({
+								fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+								fontWeight: 700,
+							})}
+							color="blue"
+							order={2}
+						>
+							{getCurrentDateOrdinalSuffixes()}
+						</Title>
+					</Stack>
+				</Group>
+		<Container style={{ transform: "translateY(25%)", width: 450 }}>
 			<Card withBorder p="xl" radius="md" className={classes.card}>
 				<Avatar
 					src={avatar}
@@ -121,5 +145,6 @@ export function UserContent({
 				</Button>
 			</Card>
 		</Container>
+		</Stack>
 	);
 }
