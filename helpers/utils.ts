@@ -96,22 +96,10 @@ function removeUndefinedKeys(obj: any) {
 	return obj;
 }
 
-// function to convert company URLs such as "google.com" to "Google"
-function convertURLToName(url: string | null | undefined) {
-	if (url) {
-		let name = url.split(".")[0];
-		name = name.charAt(0).toUpperCase() + name.slice(1);
-		return name;
-	} else {
-		return "";
-	}
-}
-
 export {
 	getCurrentDateOrdinalSuffixes,
 	formatChatTime,
 	handleFetchError,
 	removeUndefinedKeys,
-	convertURLToName,
 	getOrdinalSuffixes,
 };
