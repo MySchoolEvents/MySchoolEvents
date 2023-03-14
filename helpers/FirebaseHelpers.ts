@@ -1,4 +1,5 @@
 // import { firestore } from "firebase-admin";
+import { uuidv4 } from "@firebase/util";
 import {
   collection,
   getDocs,
@@ -42,6 +43,21 @@ export async function getHomeScreenEvents() {
 
   return { upcoming: upcoming, past: past, current: current };
 }
+
+export async function createNewEvent(name: string, location: string, startTime: number, endTime: number) {
+  const eventsRef = doc(db, "school-events", uuidv4());
+  try {
+    await setDoc(eventsRef, {
+      name: name,
+      location: location,
+      startTime: startTime,
+      endTime: endTime,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 
 export async function updatePoints(userID: string, addedPoints: number, attendedEventID: string) {
 

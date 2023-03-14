@@ -37,14 +37,13 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
     let events = await getHomeScreenEvents();
 
-    let currentEventsCopy = [...events.current]
 
     //sort current events from smallest length to longest
-    currentEventsCopy.sort((a: any, b: any) => {
-      return a.endTime - b.endTime
-    })
+    // currentEventsCopy.sort((a: any, b: any) => {
+    //   return a.endTime - b.endTime
+    // })
 
-    events.current = currentEventsCopy;
+    // events.current = currentEventsCopy;
 
     const data = await getUserData(uid);
     const userData = data
@@ -66,7 +65,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 };
 
 export default function Home({ events, user, userData }: any) {
-  console.log(userData)
+  console.log(user)
 
   return (
     <>
@@ -77,7 +76,7 @@ export default function Home({ events, user, userData }: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <CustomAppShell selectedTab="home">
+        <CustomAppShell user={user} selectedTab="home" >
           <HomeContent
             userData={userData}
             user={user}
