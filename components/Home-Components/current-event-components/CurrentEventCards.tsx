@@ -1,7 +1,9 @@
-import { UserAuth } from "../../../context/AuthContext"
-import { Card, Avatar, Text, Progress, Badge, Group, ActionIcon, createStyles, Modal } from '@mantine/core';
+import { Card, Avatar, Text, Progress, Badge, Group, ActionIcon, createStyles, Modal, Stack, Center, Title } from '@mantine/core';
 import { useState } from 'react';
 import CurrentEventModal from './CurrentEventModal';
+import { useClipboard } from "@mantine/hooks";
+import { showNotification } from "@mantine/notifications";
+import { IconClipboard } from "@tabler/icons";
 
 
 const useStyles = createStyles((theme) => ({
@@ -34,16 +36,66 @@ export function CurrentEventsCard({ setCompletedEvents, completedEvents, userDat
 
   }
 
+  const clipboard = useClipboard({ timeout: 1000 })
+
+  const copyToClipboard = () => {
+    const eventID = event.id.slice(0, 4) + event.id.slice(-1)
+    clipboard.copy(eventID.toLowerCase())
+
+    showNotification({
+      title: "Copied to Clipboard",
+      message: "Event ID copied to clipboard",
+      color: "green",
+      icon: <IconClipboard />
+    })
+
+
+  }
+
+  const showModalDependingOnAdmin = () => {
+    const eventID = event.id.slice(0, 4) + event.id.slice(-1)
+
+    if (user?.customClaims?.admin) {
+
+      return (
+        <Modal fullScreen opened={openEventModal} onClose={() => setOpenEventModal(false)}>
+          <Stack h="100%" mt="30vh">
+            <Title ta="center">{event.name}
+              <Title ta="center" color="blue">
+                Event ID
+              </Title>
+            </Title>
+
+            <Center>
+              <Title onClick={copyToClipboard} order={1} size="250px" >{eventID.toLowerCase()}</Title>
+            </Center>
+          </Stack>
+        </Modal >
+      )
+
+    } else {
+      return (
+        <Modal fullScreen opened={openEventModal} onClose={() => setOpenEventModal(false)}>
+          <CurrentEventModal setCompletedEvents={setCompletedEvents} completedEvents={completedEvents} userData={userData} user={user} event={event} openEventModal={openEventModal} />
+
+        </Modal>
+
+      )
+
+    }
+
+  }
+
   const { classes } = useStyles()
 
   return (
 
     <>
+      {
+        showModalDependingOnAdmin()
 
-      <Modal fullScreen opened={openEventModal} onClose={() => setOpenEventModal(false)}>
-        <CurrentEventModal setCompletedEvents={setCompletedEvents} completedEvents={completedEvents} userData={userData} user={user} event={event} openEventModal={openEventModal} />
+      }
 
-      </Modal>
 
       {/* @ts-ignore */}
       <Card withBorder padding="xl" radius="md" className={classes.card} onClick={goToEvent}>
@@ -56,7 +108,7 @@ export function CurrentEventsCard({ setCompletedEvents, completedEvents, userDat
         </Group>
 
         <Text fz="sm" c="dimmed" mt={5} ml="sm">
-          {location + " " + group}
+          {location + " " + (group ? group : "")}
         </Text>
 
 
