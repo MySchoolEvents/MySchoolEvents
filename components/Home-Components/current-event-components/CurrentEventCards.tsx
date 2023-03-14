@@ -76,8 +76,17 @@ export function CurrentEventsCard({ setCompletedEvents, completedEvents, userDat
     } else {
       return (
         <Modal fullScreen opened={openEventModal} onClose={() => setOpenEventModal(false)}>
-          <CurrentEventModal setCompletedEvents={setCompletedEvents} completedEvents={completedEvents} userData={userData} user={user} event={event} openEventModal={openEventModal} />
-
+          <CurrentEventModal 
+		  	setCompletedEvents={setCompletedEvents} 
+		  	completedEvents={completedEvents} 
+		  	userData={userData} 
+		  	user={user} 
+		  	event={event} 
+		  	openEventModal={openEventModal} 
+		  	gradeExists={gradeExists}
+		  	setGradeExists={setGradeExists}
+		  	currentGrade={currentGrade}
+		  	setCurrentGrade={setCurrentGrade} />
         </Modal>
 
       )

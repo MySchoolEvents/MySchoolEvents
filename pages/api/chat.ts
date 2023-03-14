@@ -24,9 +24,9 @@ export default async function handler(
         the left side of the screen that consists of an avatar, a home tab, a courses tab and a support tab. 
         Clicking the avatar will redirect the user to a settings page where they can view their personal student 
         information. There, they can see their role (student or admin), the number of courses they have, the points they have accrued, 
-		their email and a button to log out. Clicking the home tab will redirect the user to a home page that lists the current, 
-		upcoming and past school events in separate tabs. The upcoming and past events in the upcoming and past tabs 
-		are displayed in a table, which the users can filter through using the up and down arrows for each column or search 
+		their student id number, their grade level and a button to log out. Clicking the home tab will redirect the user to a home page 
+		that lists the current, upcoming and past school events in separate tabs. The upcoming and past events in the upcoming and past 
+		tabs are displayed in a table, which the users can filter through using the up and down arrows for each column or search 
 		through with the search bar on top of the table (not the page). Each table displays columns for the event name, location, 
 		start date and end date. These tables also have pagination buttons to flip through the pages of results. The current 
 		events in the current tab are displayed in cards with the title, location and length (in days) of the event. In addition 

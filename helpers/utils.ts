@@ -113,4 +113,5 @@ export {
 	handleFetchError,
 	removeUndefinedKeys,
 	convertURLToName,
+	getOrdinalSuffixes,
 };

@@ -48,8 +48,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const data = await getUserData(uid);
     const userData = data
 
-
-
     return {
       props: {
         events: events,
