@@ -1,6 +1,5 @@
 import { UserAuth } from "@/context/AuthContext";
 import {
-	convertURLToName,
 	getCurrentDateOrdinalSuffixes,
 	getOrdinalSuffixes,
 } from "@/helpers/utils";
@@ -17,7 +16,7 @@ import {
 	Badge,
 	Title,
 } from "@mantine/core";
-import { IconId, IconMail, IconSchool } from "@tabler/icons";
+import { IconId, IconSchool } from "@tabler/icons";
 import { useRouter } from "next/router";
 
 const useStyles = createStyles((theme) => ({
