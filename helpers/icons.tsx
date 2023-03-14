@@ -52,7 +52,7 @@ export const courseIconsBlack = [
 	{ icon: <IconScale size={30} />, label: "Scale" },
 	{ icon: <IconBallAmericanFootball size={30} />, label: "Football" },
 	{ icon: <IconCalculator size={30} />, label: "Calculator" },
-	{ icon: <IconChalkboard size={30} />, label: "Book" },
+	{ icon: <IconChalkboard size={30} />, label: "Board" },
 	{ icon: <IconSquareRoot2 size={30} />, label: "Square Root" },
 	{ icon: <IconChartBar size={30} />, label: "Chart" },
 ];
@@ -70,7 +70,7 @@ export const courseIconsWhite = [
 		label: "Football",
 	},
 	{ icon: <IconCalculator size={30} color={"white"} />, label: "Calculator" },
-	{ icon: <IconChalkboard size={30} color={"white"} />, label: "Book" },
+	{ icon: <IconChalkboard size={30} color={"white"} />, label: "Board" },
 	{ icon: <IconSquareRoot2 size={30} color={"white"} />, label: "Square Root" },
 	{ icon: <IconChartBar size={30} color={"white"} />, label: "Chart" },
 ];
