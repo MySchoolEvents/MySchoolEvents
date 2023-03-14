@@ -11,7 +11,8 @@ import Current from './current-event-components/Current';
 
 
 
-export default function HomeContent(props: { upcoming: any[], current: any[], past: any[], user: any }) {
+export default function HomeContent(props: { userData: any, upcoming: any[], current: any[], past: any[], user: any }) {
+
 
   return (
     <Stack m="md">
@@ -55,7 +56,7 @@ export default function HomeContent(props: { upcoming: any[], current: any[], pa
         </Tabs.Panel>
 
         <Tabs.Panel value="current" pt="xs">
-          <Current currentEvents={props.current ?? []} user={props.user} />
+          <Current userData={props.userData} currentEvents={props.current ?? []} user={props.user} />
         </Tabs.Panel>
         <Tabs.Panel value="past" pt="xs">
           <Past pastEvents={props.past ?? []} />
