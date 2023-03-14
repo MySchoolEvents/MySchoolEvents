@@ -14,7 +14,7 @@ import CustomNavbar from "@/components/Navbar";
 import { IconChevronLeft } from "@tabler/icons";
 import { UserAvatar } from "@/components/UserAvatar";
 import CustomAppShell from "@/components/CustomAppShell";
-import { getHomeScreenEvents } from "@/helpers/FirebaseHelpers";
+import { getHomeScreenEvents, getUserData } from "@/helpers/FirebaseHelpers";
 import HomeContent from "@/components/Home-Components/HomeContent";
 import React from "react";
 import nookies from "nookies";
@@ -46,11 +46,16 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
     events.current = currentEventsCopy;
 
+    const data = await getUserData(uid);
+    const userData = data
+
+
 
     return {
       props: {
         events: events,
-        user: JSON.parse(JSON.stringify(user))
+        user: JSON.parse(JSON.stringify(user)),
+        userData: userData
       },
     };
   } catch (err) {
@@ -62,7 +67,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 };
 
-export default function Home({ events, user }: any) {
+export default function Home({ events, user, userData }: any) {
+  console.log(userData)
 
   return (
     <>
@@ -75,6 +81,7 @@ export default function Home({ events, user }: any) {
       <main>
         <CustomAppShell selectedTab="home">
           <HomeContent
+            userData={userData}
             user={user}
             current={events.current}
             past={events.past}

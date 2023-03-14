@@ -4,7 +4,6 @@ import Scanner from '../Scanner';
 import dynamic from 'next/dynamic';
 import BarcodeScannerComponent from "react-qr-barcode-scanner";
 import { CurrentEventsCard } from "./CurrentEventCards"
-import { UserAuth } from '@/context/AuthContext';
 
 
 
@@ -13,51 +12,56 @@ const DynamicComponentWithNoSSR = dynamic(() => import("../Scanner"), {
 });
 
 
-const Current = ({ currentEvents, user }: any) => {
+const Current = ({ userData, currentEvents, user }: any) => {
 
 
-  const [data, setData] = useState("No result");
-  const [torchOn, setTorchOn] = useState(false)
-
-  const [showBarcode, setShowBarcode] = useState(false)
-
-  const [scanner, setScanner] = useState(<></>)
+  const [completedEvents, setCompletedEvents] = useState<any>(userData?.attendedEventID);
 
 
 
 
   return (
-		<>
-			{/**/}
-			{/*   setShowBarcode(false) */}
-			{/**/}
-			{/* }}> */}
-			{/*   <DynamicComponentWithNoSSR /> */}
-			{/* </Modal> */}
+    <>
+      {/**/}
+      {/*   setShowBarcode(false) */}
+      {/**/}
+      {/* }}> */}
+      {/*   <DynamicComponentWithNoSSR /> */}
+      {/* </Modal> */}
 
-			<Stack>
-				<Center>
-					<Stack w="70%" mt="xl">
-						{Children.toArray(
-							currentEvents.map((event: any) => {
-								return (
-									<CurrentEventsCard
-										event={event}
-										user={user}
-										title={event.name}
-										location={event.location}
-										group={event.group}
-										start={event.startTime}
-										end={event.endTime}
-									/>
-								);
-							})
-						)}
-					</Stack>
-				</Center>
-			</Stack>
-		</>
-	);
+      <Stack>
+        <Center>
+          <Stack w="70%" mt="xl">
+            {Children.toArray(
+              currentEvents.map((event: any) => {
+                // check if event.id is included in user.attendedEventID
+
+                if (!completedEvents.includes(event.id)) {
+
+
+                  return (
+                    <CurrentEventsCard
+                      completedEvents={completedEvents}
+                      setCompletedEvents={setCompletedEvents}
+                      userData={userData}
+                      event={event}
+                      user={user}
+                      title={event.name}
+                      location={event.location}
+                      group={event.group}
+                      start={event.startTime}
+                      end={event.endTime}
+                    />
+                  );
+                }
+
+              })
+            )}
+          </Stack>
+        </Center>
+      </Stack>
+    </>
+  );
 }
 
 export default Current

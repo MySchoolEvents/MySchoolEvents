@@ -217,11 +217,11 @@ export function EventTable({ events, totalEvents }: TableSortProps) {
             rows
           ) : (
             <tr style={{ padding: 40 }}>
-              <td colSpan={Object.keys(data[0]).length ?? 4}>
-                <Text weight={500} align="center">
-                  Nothing found
-                </Text>
-              </td>
+              {/* <td colSpan={Object.keys(data[0]).length ?? 4}> */}
+              <Text weight={500} align="center">
+                Nothing found
+              </Text>
+              {/* </td> */}
             </tr>
           )}
         </tbody>

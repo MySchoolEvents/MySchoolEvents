@@ -15,7 +15,7 @@ const useStyles = createStyles((theme) => ({
   }
 }))
 
-export function CurrentEventsCard({ user, title, location, group, end, start, event }: any) {
+export function CurrentEventsCard({ setCompletedEvents, completedEvents, userData, user, title, location, group, end, start, event }: any) {
 
   const [openEventModal, setOpenEventModal] = useState(false)
 
@@ -41,7 +41,7 @@ export function CurrentEventsCard({ user, title, location, group, end, start, ev
     <>
 
       <Modal fullScreen opened={openEventModal} onClose={() => setOpenEventModal(false)}>
-        <CurrentEventModal user={user} event={event} openEventModal={openEventModal} />
+        <CurrentEventModal setCompletedEvents={setCompletedEvents} completedEvents={completedEvents} userData={userData} user={user} event={event} openEventModal={openEventModal} />
 
       </Modal>
 

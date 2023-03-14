@@ -1,3 +1,4 @@
+// import { firestore } from "firebase-admin";
 import {
   collection,
   getDocs,
@@ -5,11 +6,13 @@ import {
   query,
   limit,
   updateDoc,
-  serverTimestamp,
+  arrayUnion,
+  increment,
   doc,
   setDoc,
   getDoc,
   deleteDoc,
+  DocumentSnapshot,
 } from "firebase/firestore";
 import { db } from "../firebase/config";
 import { getDateNumber } from "./EventsDateConverter";
@@ -38,6 +41,65 @@ export async function getHomeScreenEvents() {
   const current = await getCurrentEvents();
 
   return { upcoming: upcoming, past: past, current: current };
+}
+
+export async function updatePoints(userID: string, addedPoints: number, attendedEventID: string) {
+
+  const userRef = doc(db, "users", userID);
+  // increment points 
+
+  try {
+    await updateDoc(userRef, {
+      points: increment(addedPoints),
+      attendedEventID: arrayUnion(attendedEventID),
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getUserData(userID: string) {
+  const userRef = doc(db, "users", userID)
+  // get data without using await
+
+  const snap = await getDoc(userRef)
+
+  if (snap.exists()) {
+
+    const data = snap.data()
+
+    return data
+
+
+  } else {
+
+    setDoc(userRef, {
+      points: 0,
+    })
+  }
+
+  // awaitgetDoc(userRef).then((doc) => {
+  //
+  //   if (doc.exists()) {
+  //     const data = doc.data()
+  //     console.log(typeof data)
+  //     return data
+  //   } else {
+  //     // doc.data() will be undefined in this case
+  //
+  //     setDoc(userRef, {
+  //       points: 0,
+  //     })
+  //
+  //   }
+  //
+  // })
+
+
+
+
+
+
 }
 
 export async function getCurrentEvents() {
