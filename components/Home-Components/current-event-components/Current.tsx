@@ -36,7 +36,7 @@ const Current = ({ userData, currentEvents, user }: any) => {
               currentEvents.map((event: any) => {
                 // check if event.id is included in user.attendedEventID
 
-                if (!completedEvents.includes(event.id)) {
+                if (!completedEvents?.includes(event.id)) {
 
 
                   return (
