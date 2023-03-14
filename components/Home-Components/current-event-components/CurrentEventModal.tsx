@@ -9,7 +9,7 @@ import {
 	TextInput,
 	Title,
 } from "@mantine/core";
-import { Stepper, Button, Group } from "@mantine/core";
+import { Stepper, Button, Group, Card } from "@mantine/core";
 import Current from "./Current";
 import { StudentIDCard } from "@/components/StudentIDCard";
 import { UserAuth } from "@/context/AuthContext";
@@ -30,6 +30,11 @@ const useStyles = createStyles((theme) => ({
 
 	icon: {
 		color: theme.colors.red[theme.colorScheme === "dark" ? 7 : 6],
+	},
+
+	card: {
+		backgroundColor:
+			theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
 	},
 }));
 
@@ -110,7 +115,33 @@ function CurrentEventModal({ user, event, openEventModal }: any) {
 							<>
 								{/* if student ID hasn't been scanned, shows scanner, otherwise shows the next step */}
 								{studentID == "" ? (
-									<StudentIDScanner setID={setStudentID} />
+									<Card withBorder p="xl" radius="md" className={classes.card} style={{transform: "translateY(7%)"}}>
+										<Title
+											ta="center"
+											fz="lg"
+											mb="md"
+											sx={(theme) => ({
+												fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+												fontWeight: 700,
+											})}
+										>
+											Scan the barcode on your student ID using the camera
+											<Text
+												ta="center"
+												fz="sm"
+												mt={0}
+												mb="md"
+												c="dimmed"
+												sx={(theme) => ({
+													fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+													fontWeight: 700,
+												})}
+											>
+												{"if it's in a lanyard or covering, take it out"}
+											</Text>
+										</Title>
+										<StudentIDScanner setID={setStudentID} />
+									</Card>
 								) : (
 									showStudent()
 								)}
