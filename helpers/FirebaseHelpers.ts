@@ -12,7 +12,6 @@ import {
   setDoc,
   getDoc,
   deleteDoc,
-  DocumentSnapshot,
 } from "firebase/firestore";
 import { db } from "../firebase/config";
 import { getDateNumber } from "./EventsDateConverter";

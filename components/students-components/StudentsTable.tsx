@@ -12,17 +12,18 @@ const useStyles = createStyles((theme) => ({
 
 interface TableSelectionProps {
   data: { avatar: string; name: string; studentID: string; points: string; grade: number, id: string }[];
+  selection: any[];
+  setSelection: (value: any) => void;
 }
 
-export function StudentTable({ data }: TableSelectionProps) {
+export function StudentTable({ data, selection, setSelection }: TableSelectionProps) {
   const { classes, cx } = useStyles();
-  const [selection, setSelection] = useState(['1']);
   const toggleRow = (id: string) =>
-    setSelection((current) =>
-      current.includes(id) ? current.filter((item) => item !== id) : [...current, id]
+    setSelection((current: any) =>
+      current.includes(id) ? current.filter((item: any) => item !== id) : [...current, id]
     );
   const toggleAll = () =>
-    setSelection((current) => (current.length === data.length ? [] : data.map((item) => item.id)));
+    setSelection((current: any) => (current.length === data.length ? [] : data.map((item) => item.id)));
 
   const rows = data.map((item) => {
 
