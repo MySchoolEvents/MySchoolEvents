@@ -1,18 +1,4 @@
 import Head from "next/head";
-import styles from "@/styles/Home.module.css";
-import {
-  AppShell,
-  Navbar,
-  Text,
-  ActionIcon,
-  Group,
-  Tooltip,
-  Avatar,
-  Stack,
-} from "@mantine/core";
-import CustomNavbar from "@/components/Navbar";
-import { IconChevronLeft } from "@tabler/icons";
-import { UserAvatar } from "@/components/UserAvatar";
 import CustomAppShell from "@/components/CustomAppShell";
 import { getHomeScreenEvents, getUserData } from "@/helpers/FirebaseHelpers";
 import HomeContent from "@/components/Home-Components/HomeContent";
@@ -20,7 +6,6 @@ import React from "react";
 import nookies from "nookies";
 import { GetServerSidePropsContext } from "next";
 import { admin } from "@/firebase/admin";
-import { removeUndefinedKeys } from "@/helpers/utils";
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   try {
@@ -36,14 +21,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     // @ts-ignore
 
     let events = await getHomeScreenEvents();
-
-
-    //sort current events from smallest length to longest
-    // currentEventsCopy.sort((a: any, b: any) => {
-    //   return a.endTime - b.endTime
-    // })
-
-    // events.current = currentEventsCopy;
 
     const data = await getUserData(uid);
     const userData = data
