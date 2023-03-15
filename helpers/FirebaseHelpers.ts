@@ -12,7 +12,6 @@ import {
   setDoc,
   getDoc,
   deleteDoc,
-  DocumentSnapshot,
 } from "firebase/firestore";
 import { db } from "../firebase/config";
 import { getDateNumber } from "./EventsDateConverter";
@@ -24,7 +23,9 @@ export async function getStudents() {
   const usersArray: any[] = [];
 
   querySnapshot.forEach((doc) => {
-    usersArray.push(doc.data());
+    const user = doc.data();
+    user.id = doc.id;
+    usersArray.push(user)
   });
 
   return usersArray;
