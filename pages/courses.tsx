@@ -9,7 +9,7 @@ import CourseCard from "@/components/course-components/CourseCard";
 import { createStyles } from "@mantine/core";
 import { v4 as uuidv4 } from "uuid";
 import { GetServerSideProps } from "next";
-import { loadCourses } from "@/helpers/FirebaseHelpers";
+import { getUserData, loadCourses } from "@/helpers/FirebaseHelpers";
 import { UserAuth } from "@/context/AuthContext";
 import React from "react";
 import nookies from "nookies";
@@ -23,10 +23,12 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
     const { uid } = token;
     const courses = await loadCourses(uid);
+    const user = await getUserData(uid);
 
     return {
       props: {
         courses: courses,
+        user: JSON.parse(JSON.stringify(user)),
       },
     };
   } catch (err) {
@@ -52,9 +54,10 @@ type CoursesProps = {
     id: string;
   }[]
   | [];
+  user: any;
 };
 
-export default function Courses({ courses }: CoursesProps) {
+export default function Courses({ courses, user }: CoursesProps) {
   const [addCourseModalIsOpen, setAddCourseModalIsOpen] = useState(false);
   const [editCourseModalIsOpen, setEditCourseModalIsOpen] = useState(false);
   const [currentCourseProperties, setCurrentCourseProperties] = useState({
@@ -91,8 +94,7 @@ export default function Courses({ courses }: CoursesProps) {
           currentCourseProperties={currentCourseProperties}
           setCurrentCourseProperties={setCurrentCourseProperties}
         />
-        {/* @ts-ignore */}
-        <CustomAppShell selectedTab="courses">
+        <CustomAppShell user={user} selectedTab="courses">
           <CoursesContent
             setAddCourseModalIsOpen={setAddCourseModalIsOpen}
             setEditCourseModalIsOpen={setEditCourseModalIsOpen}

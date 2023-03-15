@@ -20,9 +20,10 @@ type ChatProps = {
 		isLoader: boolean;
 	}[];
 	setMessages: Function;
+	user: any;
 };
 
-function Chat({ messages, setMessages }: ChatProps) {
+function Chat({ messages, setMessages, user }: ChatProps) {
 	const [chatInput, setChatInput] = useState("");
 	const [conversationHistory, setConversationHistory] = useState(
 		"Chatbot: 'Hello! I'm the My School Events AI assistant. How may I assist you today?'"
@@ -77,6 +78,7 @@ function Chat({ messages, setMessages }: ChatProps) {
 			body: JSON.stringify({
 				message: chatInput,
 				conversationHistory: chatHistory,
+				studentSupport:  user?.customClaims?.admin ? false : true,
 			}),
 		})
 			.then(handleFetchError)
