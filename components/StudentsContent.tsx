@@ -1,7 +1,7 @@
 import { getCurrentDateOrdinalSuffixes } from '@/helpers/utils'
 import { Badge, Button, Card, Group, GroupedTransition, Modal, Stack, Text, Title } from '@mantine/core'
 import { GetServerSidePropsContext } from 'next'
-import React, { useEffect } from 'react'
+import React, { Children, useEffect } from 'react'
 import { StudentTable } from './students-components/StudentsTable'
 import nookies from "nookies";
 import { admin } from "@/firebase/admin";
@@ -87,7 +87,6 @@ const StudentsContent = ({ students }: any) => {
 
   const [openedWinnersModal, setOpenedWinnersModal] = React.useState(false)
 
-  console.log(students)
   return (
     <>
 
@@ -95,7 +94,7 @@ const StudentsContent = ({ students }: any) => {
         <Stack>
           <Title ta="center">Winners</Title>
           {winners.map((student: any) => {
-            return (
+            return (Children.toArray(
               <Card shadow={"xl"}>
                 <Stack >
                   <Group position={"apart"}>
@@ -110,7 +109,7 @@ const StudentsContent = ({ students }: any) => {
 
               </Card>
 
-            )
+            ))
           })}
           <Button onClick={() => {
             // @ts-ignore
@@ -145,6 +144,7 @@ const StudentsContent = ({ students }: any) => {
           </Stack>
           <Group>
             <Button onClick={() => {
+              // @ts-ignore
               setWinners(calculateWinners())
               setOpenedWinnersModal(true)
             }

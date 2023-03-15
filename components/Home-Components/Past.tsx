@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Center, Pagination, Stack, Text } from "@mantine/core";
 import { EventTable } from "./EventTable";
 
@@ -11,6 +11,10 @@ const Past = ({ pastEvents, setPastEvents, user }: any) => {
 
 		setEvents(pastEvents.slice(newPage * 10 - 10, newPage * 10));
 	};
+
+	useEffect(() => {
+		setEvents(pastEvents.slice(0, 10));
+	}, [pastEvents])
 
 	return (
 		<Stack mih={"100%"}>

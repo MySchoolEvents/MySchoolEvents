@@ -30,64 +30,64 @@ const NewEventModal = ({
 		const numericValue = month * 100 + day;
 		const newID = uuidv4();
 
-		// // current event
-		// if (numericValue === getDateNumber()) {
-		// 	let currentEventsClone = [...current];
-		// 	currentEventsClone.push({
-		// 		name: eventName,
-		// 		location: eventLocation,
-		// 		startTime: numericValue,
-		// 		endTime: numericValue,
-		// 		id: newID,
-		// 	});
+		// current event
+		if (numericValue === getDateNumber()) {
+			let currentEventsClone = [...current];
+			currentEventsClone.push({
+				name: eventName,
+				location: eventLocation,
+				startTime: numericValue,
+				endTime: numericValue,
+				id: newID,
+			});
 
-		// 	let sortedCurrentEventsClone = currentEventsClone.sort(
-		// 		(a, b) => a.endTime - b.endTime
-		// 	);
+			let sortedCurrentEventsClone = currentEventsClone.sort(
+				(a, b) => a.endTime - b.endTime
+			);
 
-		// 	setCurrent(sortedCurrentEventsClone);
-		// } else if (numericValue > getDateNumber()) {
-		// 	// upcoming event
-		// 	let upcomingEventsClone = [...upcoming];
-		// 	upcomingEventsClone.push({
-		// 		name: eventName,
-		// 		location: eventLocation,
-		// 		startTime: numericValue,
-		// 		endTime: numericValue,
-		// 		id: newID,
-		// 	});
+			setCurrent(sortedCurrentEventsClone);
+		} else if (numericValue > getDateNumber()) {
+			// upcoming event
+			let upcomingEventsClone = [...upcoming];
+			upcomingEventsClone.push({
+				name: eventName,
+				location: eventLocation,
+				startTime: numericValue,
+				endTime: numericValue,
+				id: newID,
+			});
 
-		// 	// sort upcoming events from smallest to largest start time
-		// 	let sortedUpcomingEventsClone = upcomingEventsClone.sort(
-		// 		(a, b) => a.startTime - b.startTime
-		// 	);
+			// sort upcoming events from smallest to largest start time
+			let sortedUpcomingEventsClone = upcomingEventsClone.sort(
+				(a, b) => a.startTime - b.startTime
+			);
 
-		// 	setUpcoming(sortedUpcomingEventsClone);
-		// } else if (numericValue < getDateNumber()) {
-		// 	// past event
-		// 	let pastEventsClone = [...past];
-		// 	pastEventsClone.push({
-		// 		name: eventName,
-		// 		location: eventLocation,
-		// 		startTime: numericValue,
-		// 		endTime: numericValue,
-		// 		id: newID,
-		// 	});
+			setUpcoming(sortedUpcomingEventsClone);
+		} else if (numericValue < getDateNumber()) {
+			// past event
+			let pastEventsClone = [...past];
+			pastEventsClone.push({
+				name: eventName,
+				location: eventLocation,
+				startTime: numericValue,
+				endTime: numericValue,
+				id: newID,
+			});
 
-		// 	// sort past events by by start date from lowest to
-		// 	let sortedPastEventsClone = pastEventsClone.sort(
-		// 		(a, b) => b.startTime - a.startTime
-		// 	);
+			// sort past events by by start date from lowest to
+			let sortedPastEventsClone = pastEventsClone.sort(
+				(a, b) => b.startTime - a.startTime
+			);
 
-		// 	setPast(sortedPastEventsClone);
-		// }
+			setPast(sortedPastEventsClone);
+		}
 
 		createNewEvent(eventName, eventLocation, numericValue, numericValue, newID);
 
 		resetState();
 		// close modal
 		setOpened(false);
-		location.reload();
+		// location.reload();
 	};
 
 	const resetState = () => {
@@ -102,6 +102,7 @@ const NewEventModal = ({
 			centered
 			opened={opened}
 			onClose={() => {
+				resetState();
 				setOpened(false);
 			}}
 		>

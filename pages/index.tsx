@@ -42,7 +42,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 };
 
 export default function Home({ events, user, userData }: any) {
-  console.log(user)
 
   return (
     <>

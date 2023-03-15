@@ -7,7 +7,6 @@ function Scanner({ setID }: { setID: any }) {
   return (
     <BarCodeScanner onUpdate={(err, resp): void => {
       if (resp && resp.getText().length == 6) {
-        console.log(resp.getText())
         setID(resp.getText())
       }
     }}
