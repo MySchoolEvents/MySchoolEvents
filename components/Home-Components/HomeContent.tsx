@@ -122,6 +122,7 @@ export default function HomeContent(props: {
 						<Upcoming
 							upcomingEvents={upcoming ?? []}
 							setUpcomingEvents={setUpcoming}
+							user={props.user}
 						/>
 					</Tabs.Panel>
 
@@ -134,7 +135,7 @@ export default function HomeContent(props: {
 						/>
 					</Tabs.Panel>
 					<Tabs.Panel value="past" pt="xs">
-						<Past pastEvents={past ?? []} setPastEvents={setPast} />
+						<Past pastEvents={past ?? []} setPastEvents={setPast} user={props.user} />
 					</Tabs.Panel>
 				</Tabs>
 			</Stack>

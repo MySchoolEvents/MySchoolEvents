@@ -12,6 +12,7 @@ import {
   setDoc,
   getDoc,
   deleteDoc,
+  getCountFromServer,
 } from "firebase/firestore";
 import { db } from "../firebase/config";
 import { getDateNumber } from "./EventsDateConverter";
@@ -30,6 +31,12 @@ export async function getStudents() {
 
   return usersArray;
 
+}
+
+export async function loadNumberOfStudents() {
+  const studentsRef = collection(db, "users");
+  const studentsSnapshot = await getCountFromServer(studentsRef);
+  return studentsSnapshot.data().count;
 }
 
 export async function getUpcomingEvents() {
@@ -194,6 +201,13 @@ export async function loadCourses(userID: string) {
   });
 
   return coursesArray;
+}
+
+// load number of courses from firestore
+export async function loadNumberOfCourses(userID: string) {
+  const coursesRef = collection(db, "users", userID, "courses");
+  const coursesSnapshot = await getCountFromServer(coursesRef);
+  return coursesSnapshot.data().count;
 }
 
 // create a new course in firestore
