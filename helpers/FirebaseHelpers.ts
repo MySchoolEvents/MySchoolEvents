@@ -25,7 +25,7 @@ export async function getStudents() {
   querySnapshot.forEach((doc) => {
     const user = doc.data();
     user.id = doc.id;
-    usersArray.push(user)
+    usersArray.push(user);
   });
 
   return usersArray;
@@ -44,7 +44,9 @@ export async function getUpcomingEvents() {
   const documentArray: any[] = [];
 
   querySnapshot.forEach((doc) => {
-    documentArray.push(doc.data());
+    const event = doc.data()
+    event.id = doc.id
+    documentArray.push(event);
   });
 
   return documentArray;
@@ -58,8 +60,8 @@ export async function getHomeScreenEvents() {
   return { upcoming: upcoming, past: past, current: current };
 }
 
-export async function createNewEvent(name: string, location: string, startTime: number, endTime: number) {
-  const eventsRef = doc(db, "school-events", uuidv4());
+export async function createNewEvent(name: string, location: string, startTime: number, endTime: number, eventID: string) {
+  const eventsRef = doc(db, "school-events", eventID);
   try {
     await setDoc(eventsRef, {
       name: name,
@@ -156,16 +158,28 @@ export async function getPastEvents() {
   //
   const eventsRef = collection(db, "school-events");
 
-  const q = query(eventsRef, where("startTime", "<", 309), limit(30));
+  const q = query(eventsRef, where("startTime", "<", getDateNumber()), limit(30));
 
   const querySnapshot = await getDocs(q);
   const documentArray: any[] = [];
 
   querySnapshot.forEach((doc) => {
-    documentArray.push(doc.data());
+    const event = doc.data()
+    event.id = doc.id
+    documentArray.push(event);
   });
 
   return documentArray;
+}
+
+// delete an event from Firestore
+export async function removeEvent(eventID: string) {
+  const eventRef = doc(db, "school-events", eventID);
+  try {
+    await deleteDoc(eventRef);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 // load courses from firestore
