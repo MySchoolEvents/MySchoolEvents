@@ -53,7 +53,6 @@ function CurrentEventModal({
 	setCurrentGrade,
 }: any) {
 	const { classes } = useStyles();
-	console.log("USRE DATA", userData);
 
 	const [active, setActive] = useState(0);
 
@@ -119,7 +118,6 @@ function CurrentEventModal({
 	};
 
 	const getTotalPoints = () => {
-		console.log(userData);
 
 		const initialPoints = userData?.points ? userData?.points : 0;
 
