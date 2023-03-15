@@ -32,49 +32,49 @@ const NewEventModal = ({
 		const numericValue = month * 100 + day;
 		const newID = uuidv4();
 
-		// current event
-		if (numericValue === getDateNumber()) {
-			let currentEventsClone = [...current];
-			currentEventsClone.push({
-				name: eventName,
-				location: eventLocation,
-				startTime: numericValue,
-				endTime: numericValue,
-				id: newID,
-			});
+		// // current event
+		// if (numericValue === getDateNumber()) {
+		// 	let currentEventsClone = [...current];
+		// 	currentEventsClone.push({
+		// 		name: eventName,
+		// 		location: eventLocation,
+		// 		startTime: numericValue,
+		// 		endTime: numericValue,
+		// 		id: newID,
+		// 	});
 
-			setCurrent(currentEventsClone);
-		} else if (numericValue > getDateNumber()) {
-			// upcoming event
-			let upcomingEventsClone = [...upcoming];
-			upcomingEventsClone.push({
-				name: eventName,
-				location: eventLocation,
-				startTime: numericValue,
-				endTime: numericValue,
-				id: newID,
-			});
+		// 	setCurrent(currentEventsClone);
+		// } else if (numericValue > getDateNumber()) {
+		// 	// upcoming event
+		// 	let upcomingEventsClone = [...upcoming];
+		// 	upcomingEventsClone.push({
+		// 		name: eventName,
+		// 		location: eventLocation,
+		// 		startTime: numericValue,
+		// 		endTime: numericValue,
+		// 		id: newID,
+		// 	});
 
-			setUpcoming(upcomingEventsClone);
-		} else if (numericValue < getDateNumber()) {
-			// past event
-			let pastEventsClone = [...past];
-			pastEventsClone.push({
-				name: eventName,
-				location: eventLocation,
-				startTime: numericValue,
-				endTime: numericValue,
-				id: newID,
-			});
+		// 	setUpcoming(upcomingEventsClone);
+		// } else if (numericValue < getDateNumber()) {
+		// 	// past event
+		// 	let pastEventsClone = [...past];
+		// 	pastEventsClone.push({
+		// 		name: eventName,
+		// 		location: eventLocation,
+		// 		startTime: numericValue,
+		// 		endTime: numericValue,
+		// 		id: newID,
+		// 	});
 
-			setPast(pastEventsClone);
-		}
+		// 	setPast(pastEventsClone);
+		// }
 
 		createNewEvent(eventName, eventLocation, numericValue, numericValue, newID);
 
 		// close modal
 		setOpened(false);
-		router.reload();
+		location.reload();
 	};
 
 	return (

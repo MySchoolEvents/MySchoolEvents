@@ -160,9 +160,14 @@ export function CurrentEventsCard({
 					<Text fz="sm" c="dimmed" mt={5}>
 						{location + " " + (group ? group : "")}
 					</Text>
-					<ActionIcon color="red" onClick={(event) => handleEventRemoval(event)}>
-						<IconTrash />
-					</ActionIcon>
+					{user?.customClaims?.admin && (
+						<ActionIcon
+							color="red"
+							onClick={(event) => handleEventRemoval(event)}
+						>
+							<IconTrash />
+						</ActionIcon>
+					)}
 				</Group>
 			</Card>
 		</>
