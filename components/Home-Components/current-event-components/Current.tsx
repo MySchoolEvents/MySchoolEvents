@@ -9,7 +9,7 @@ const DynamicComponentWithNoSSR = dynamic(() => import("../Scanner"), {
 	ssr: false,
 });
 
-const Current = ({ userData, currentEvents, user }: any) => {
+const Current = ({ userData, currentEvents, setCurrentEvents, user }: any) => {
 	const [completedEvents, setCompletedEvents] = useState<any>(
 		userData.attendedEventID
 	);
@@ -29,7 +29,7 @@ const Current = ({ userData, currentEvents, user }: any) => {
 				<Center>
 					<Stack w="70%" mt="xl">
 						{Children.toArray(
-							currentEvents.map((event: any) => {
+							currentEvents.map((event: any, index: number) => {
 								// check if event.id is included in user.attendedEventID
 
 								if (completedEvents) {
@@ -50,6 +50,9 @@ const Current = ({ userData, currentEvents, user }: any) => {
 												setGradeExists={setGradeExists}
 												currentGrade={currentGrade}
 												setCurrentGrade={setCurrentGrade}
+												currentEvents={currentEvents}
+												setCurrentEvents={setCurrentEvents}
+												index={index}
 											/>
 										);
 									}
@@ -70,6 +73,9 @@ const Current = ({ userData, currentEvents, user }: any) => {
 											setGradeExists={setGradeExists}
 											currentGrade={currentGrade}
 											setCurrentGrade={setCurrentGrade}
+											currentEvents={currentEvents}
+											setCurrentEvents={setCurrentEvents}
+											index={index}
 										/>
 									);
 								}
