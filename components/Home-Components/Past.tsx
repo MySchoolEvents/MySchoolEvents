@@ -24,7 +24,7 @@ const Past = ({ pastEvents }: any) => {
       <EventTable events={events} totalEvents={pastEvents} />
       <Center>
         {/* @ts-ignore */}
-        <Pagination pos={"fixed"} bottom={30} value={page} onChange={onPaginationChange} total={pastEvents.length / 10} />
+        <Pagination pos={"fixed"} bottom={30} value={page} onChange={onPaginationChange} total={1} />
       </Center>
     </Stack>
   )

@@ -1,4 +1,3 @@
-// import { firestore } from "firebase-admin";
 import { uuidv4 } from "@firebase/util";
 import {
   collection,
@@ -17,6 +16,20 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase/config";
 import { getDateNumber } from "./EventsDateConverter";
+
+export async function getStudents() {
+  const usersRef = collection(db, "users");
+  const querySnapshot = await getDocs(usersRef);
+
+  const usersArray: any[] = [];
+
+  querySnapshot.forEach((doc) => {
+    usersArray.push(doc.data());
+  });
+
+  return usersArray;
+
+}
 
 export async function getUpcomingEvents() {
   // upcoming events from firestore
@@ -223,21 +236,21 @@ export async function removeCourse(userID: string, courseID: string) {
 
 // set grade field for a specific user in firestore
 export async function updateGrade(userID: string, grade: string) {
-	const userRef = doc(db, "users", userID);
+  const userRef = doc(db, "users", userID);
 
   // try to update grade field in user doc
-	try {
-		await updateDoc(userRef, {
-			grade: grade,
-		});
-	} catch (error) {
+  try {
+    await updateDoc(userRef, {
+      grade: grade,
+    });
+  } catch (error) {
     // if user doc doesn't exist, create it and set grade field
-		try {
-			await setDoc(userRef, {
-				grade: grade,
-			});
-		} catch (error) {
-			console.log(error);
-		}
-	}
+    try {
+      await setDoc(userRef, {
+        grade: grade,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
