@@ -7,9 +7,10 @@ import Chat from "./Chat";
 type SupportContentProps = {
 	messages: { isAssistant: boolean; content: string; timestamp: Date; isLoader: boolean; }[];
 	setMessages: Function;
+	user: any;
 };
 
-function SupportContent({ messages, setMessages }: SupportContentProps) {
+function SupportContent({ messages, setMessages, user }: SupportContentProps) {
 	return (
 		<Stack m="md">
 			<Group position="apart">
@@ -52,7 +53,7 @@ function SupportContent({ messages, setMessages }: SupportContentProps) {
 				<Space h="sm" />
 
 				<Tabs.Panel value="chat" pt="xs">
-					<Chat messages={messages} setMessages={setMessages} />
+					<Chat messages={messages} setMessages={setMessages} user={user} />
 				</Tabs.Panel>
 
 				<Tabs.Panel value="faq" pt="xs">

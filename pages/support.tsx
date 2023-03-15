@@ -21,7 +21,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     return {
       props: {
         user: JSON.parse(JSON.stringify(user)),
-
       },
     };
   } catch (err) {
@@ -53,7 +52,7 @@ function Support({ user }: any) {
       </Head>
       <main>
         <CustomAppShell user={user} selectedTab="support">
-          <SupportContent messages={messageData} setMessages={setMessageData} />
+          <SupportContent messages={messageData} setMessages={setMessageData} user={user} />
         </CustomAppShell>
       </main>
     </>
