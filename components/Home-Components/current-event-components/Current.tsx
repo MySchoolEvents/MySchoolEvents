@@ -30,55 +30,27 @@ const Current = ({ userData, currentEvents, setCurrentEvents, user }: any) => {
 					<Stack w="70%" mt="xl">
 						{Children.toArray(
 							currentEvents.map((event: any, index: number) => {
-								// check if event.id is included in user.attendedEventID
-
-								if (completedEvents) {
-									if (!completedEvents.includes(event.id)) {
-										return (
-											<CurrentEventsCard
-												completedEvents={completedEvents}
-												setCompletedEvents={setCompletedEvents}
-												userData={userData}
-												event={event}
-												user={user}
-												title={event.name}
-												location={event.location}
-												group={event.group}
-												start={event.startTime}
-												end={event.endTime}
-												gradeExists={gradeExists}
-												setGradeExists={setGradeExists}
-												currentGrade={currentGrade}
-												setCurrentGrade={setCurrentGrade}
-												currentEvents={currentEvents}
-												setCurrentEvents={setCurrentEvents}
-												index={index}
-											/>
-										);
-									}
-								} else {
-									return (
-										<CurrentEventsCard
-											completedEvents={completedEvents}
-											setCompletedEvents={setCompletedEvents}
-											userData={userData}
-											event={event}
-											user={user}
-											title={event.name}
-											location={event.location}
-											group={event.group}
-											start={event.startTime}
-											end={event.endTime}
-											gradeExists={gradeExists}
-											setGradeExists={setGradeExists}
-											currentGrade={currentGrade}
-											setCurrentGrade={setCurrentGrade}
-											currentEvents={currentEvents}
-											setCurrentEvents={setCurrentEvents}
-											index={index}
-										/>
-									);
-								}
+								return (
+									<CurrentEventsCard
+										completedEvents={completedEvents}
+										setCompletedEvents={setCompletedEvents}
+										userData={userData}
+										event={event}
+										user={user}
+										title={event.name}
+										location={event.location}
+										group={event.group}
+										start={event.startTime}
+										end={event.endTime}
+										gradeExists={gradeExists}
+										setGradeExists={setGradeExists}
+										currentGrade={currentGrade}
+										setCurrentGrade={setCurrentGrade}
+										currentEvents={currentEvents}
+										setCurrentEvents={setCurrentEvents}
+										index={index}
+									/>
+								);
 							})
 						)}
 					</Stack>

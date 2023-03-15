@@ -13,8 +13,10 @@ that lists the current, upcoming and past school events in separate tabs. The up
 tabs are displayed in a table, which the users can filter through using the up and down arrows for each column or search 
 through with the search bar on top of the table (not the page). Each table displays columns for the event name, location, 
 start date and end date. These tables also have pagination buttons to flip through the pages of results. The current 
-events in the current tab are displayed in cards with the title, location and length (in days) of the event. In addition 
-to viewing events, students can sign into current events by clicking the card displaying them. This will ask permission 
+events in the current tab are displayed in cards with the title, location and length (in days) of the event. Students can see
+if they have attended an event here in the current tab because there will be a green checkmark on the event card. Clicking the card
+will trigger a notification telling them that they've already received credit. If they haven't attended the event, they
+can sign into current events by clicking the card displaying them. This will ask permission 
 for the camera (which is used for scanning their student ID). Then, a popup opens up with the camera shown as the user must 
 scan the barcode on their student ID. If the student is having issues scanning their ID, they should take it out of any lanyards 
 or coverings thath might be obscuring the barcode on their ID. Ensure that they make it easy as possible for the computer to 
