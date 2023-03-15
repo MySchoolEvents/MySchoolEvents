@@ -16,7 +16,7 @@ import { useState } from "react";
 import CurrentEventModal from "./CurrentEventModal";
 import { useClipboard } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
-import { IconClipboard, IconTrash } from "@tabler/icons";
+import { IconCheck, IconClipboard, IconTrash } from "@tabler/icons";
 import { removeEvent } from "@/helpers/FirebaseHelpers";
 
 const useStyles = createStyles((theme) => ({
@@ -134,6 +134,15 @@ export function CurrentEventsCard({
 		removeEvent(event.id);
 	};
 
+	const eventAlreadyAttendedNotification = () => {
+			showNotification({
+				title: "Attended Event",
+				message: "Looks like you've already gotten credit for this event!",
+				color: "green",
+				icon: <IconCheck />,
+			});
+	};
+
 	const { classes } = useStyles();
 
 	return (
@@ -146,7 +155,7 @@ export function CurrentEventsCard({
 				padding="xl"
 				radius="md"
 				className={classes.card}
-				onClick={goToEvent}
+				onClick={completedEvents?.includes(event.id) ? eventAlreadyAttendedNotification : goToEvent}
 			>
 				<Group position="apart" p={"sm"}>
 					<Text fz="lg" fw={500}>
@@ -166,6 +175,11 @@ export function CurrentEventsCard({
 							onClick={(event) => handleEventRemoval(event)}
 						>
 							<IconTrash />
+						</ActionIcon>
+					)}
+					{completedEvents?.includes(event.id) && (
+						<ActionIcon color="green">
+							<IconCheck />
 						</ActionIcon>
 					)}
 				</Group>
