@@ -14,6 +14,7 @@ const Upcoming = ({ upcomingEvents, setUpcomingEvents, user }: any) => {
 
 	useEffect(() => {
 		setEvents(upcomingEvents.slice(0, 10));
+		setPage(1);
 	}, [upcomingEvents])
 
 	return (

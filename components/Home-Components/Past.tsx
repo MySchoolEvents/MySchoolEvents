@@ -14,6 +14,7 @@ const Past = ({ pastEvents, setPastEvents, user }: any) => {
 
 	useEffect(() => {
 		setEvents(pastEvents.slice(0, 10));
+		setPage(1);
 	}, [pastEvents])
 
 	return (
