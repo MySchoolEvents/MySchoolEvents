@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { Modal, Title, TextInput, Stack, Button } from "@mantine/core"
 import { DatePicker } from '@mantine/dates';
 import { createNewEvent } from '@/helpers/FirebaseHelpers';
+import { useRouter } from 'next/router'
 
 const NewEventModal = ({ opened, setOpened }: any) => {
+  const router = useRouter()
   const [dateVal, setDateVal] = useState<Date | null>(null);
   const [eventName, setEventName] = useState<string>("");
   const [eventLocation, setEventLocation] = useState<string>("");
@@ -26,6 +28,7 @@ const NewEventModal = ({ opened, setOpened }: any) => {
 
     // close modal
     setOpened(false);
+    router.reload()
 
   }
 
@@ -33,7 +36,11 @@ const NewEventModal = ({ opened, setOpened }: any) => {
   return (
 
 
-    <Modal centered opened={opened} onClose={() => setOpened(false)}>
+    <Modal withCloseButton={false} centered opened={opened} onClose={() => {
+      setOpened(false)
+
+
+    }}>
 
       <Stack>
         <Title>Add New Event</Title>

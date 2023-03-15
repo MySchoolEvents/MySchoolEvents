@@ -22,7 +22,7 @@ const Upcoming = ({ upcomingEvents }: any) => {
       <EventTable events={events} totalEvents={upcomingEvents} />
       <Center>
         {/* @ts-ignore */}
-        <Pagination pos={"fixed"} bottom={30} value={page} onChange={onPaginationChange} total={upcomingEvents.length / 10} />
+        <Pagination pos={"fixed"} bottom={30} value={page} onChange={onPaginationChange} total={upcomingEvents.length / 10 - 1} />
       </Center>
     </Stack>
   )

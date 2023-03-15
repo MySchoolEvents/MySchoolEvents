@@ -1,4 +1,5 @@
 import {
+  Badge,
   Button,
   Center,
   Group,
@@ -30,7 +31,8 @@ function CustomNavbar({ user, selectedTab }: Props) {
         {
           user?.customClaims?.admin &&
           <Center>
-            <Text color="red" weight={"bold"} size="lg">ADMIN</Text>
+            {/* <Text color="red" weight={"bold"} size="lg">ADMIN</Text> */}
+            <Badge color="red" variant="outline" size="lg">ADMIN</Badge>
           </Center>
 
         }
