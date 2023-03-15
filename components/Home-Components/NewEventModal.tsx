@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Modal, Title, TextInput, Stack, Button } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
 import { createNewEvent } from "@/helpers/FirebaseHelpers";
-import { useRouter } from "next/router";
 import { uuidv4 } from "@firebase/util";
 import { getDateNumber } from "@/helpers/EventsDateConverter";
 
@@ -16,7 +15,6 @@ const NewEventModal = ({
 	past,
 	setPast,
 }: any) => {
-	const router = useRouter();
 	const [dateVal, setDateVal] = useState<Date | null>(null);
 	const [eventName, setEventName] = useState<string>("");
 	const [eventLocation, setEventLocation] = useState<string>("");
@@ -43,7 +41,11 @@ const NewEventModal = ({
 		// 		id: newID,
 		// 	});
 
-		// 	setCurrent(currentEventsClone);
+		// 	let sortedCurrentEventsClone = currentEventsClone.sort(
+		// 		(a, b) => a.endTime - b.endTime
+		// 	);
+
+		// 	setCurrent(sortedCurrentEventsClone);
 		// } else if (numericValue > getDateNumber()) {
 		// 	// upcoming event
 		// 	let upcomingEventsClone = [...upcoming];
@@ -55,7 +57,12 @@ const NewEventModal = ({
 		// 		id: newID,
 		// 	});
 
-		// 	setUpcoming(upcomingEventsClone);
+		// 	// sort upcoming events from smallest to largest start time
+		// 	let sortedUpcomingEventsClone = upcomingEventsClone.sort(
+		// 		(a, b) => a.startTime - b.startTime
+		// 	);
+
+		// 	setUpcoming(sortedUpcomingEventsClone);
 		// } else if (numericValue < getDateNumber()) {
 		// 	// past event
 		// 	let pastEventsClone = [...past];
@@ -67,14 +74,26 @@ const NewEventModal = ({
 		// 		id: newID,
 		// 	});
 
-		// 	setPast(pastEventsClone);
+		// 	// sort past events by by start date from lowest to
+		// 	let sortedPastEventsClone = pastEventsClone.sort(
+		// 		(a, b) => b.startTime - a.startTime
+		// 	);
+
+		// 	setPast(sortedPastEventsClone);
 		// }
 
 		createNewEvent(eventName, eventLocation, numericValue, numericValue, newID);
 
+		resetState();
 		// close modal
 		setOpened(false);
 		location.reload();
+	};
+
+	const resetState = () => {
+		setDateVal(null);
+		setEventName("");
+		setEventLocation("");
 	};
 
 	return (

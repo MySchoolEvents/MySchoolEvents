@@ -49,6 +49,7 @@ interface RowData {
 interface TableSortProps {
 	events: any[];
 	totalEvents: RowData[];
+	setTotalEvents: any;
 	setEvents: Function;
 	user: any;
 }
@@ -132,6 +133,7 @@ function sortData(
 export function EventTable({
 	events,
 	totalEvents,
+	setTotalEvents,
 	setEvents,
 	user,
 }: TableSortProps) {
@@ -152,6 +154,33 @@ export function EventTable({
 			setSortedData(data);
 		}
 	}, [search]);
+
+	useEffect(() => {
+		setRows(
+			sortedData.map((row, index) => (
+				<tr key={row.name + row.startTime}>
+					<td>{row.name}</td>
+					<td>{row.location}</td>
+					<td>{convertDateNumberToString(row.startTime)}</td>
+					<td>{convertDateNumberToString(row.endTime)} </td>
+					{user?.customClaims?.admin && (
+						<td>
+							<ActionIcon
+								m={0}
+								p={0}
+								color={"red"}
+								onClick={(event) => {
+									handleEventRemoval(event, row, index, rows, setRows);
+								}}
+							>
+								<IconTrash />
+							</ActionIcon>
+						</td>
+					)}
+				</tr>
+			))
+		);
+	}, [sortedData]);
 
 	const setSorting = (field: keyof RowData) => {
 		const reversed = field === sortBy ? !reverseSortDirection : false;
@@ -185,6 +214,12 @@ export function EventTable({
 		let newArray = clonedEventArray.filter((event: any) => event.id !== row.id);
 		setEvents(newArray);
 
+		let clonedTotalEventArray: any = [...totalEvents];
+		let newTotalArray = clonedTotalEventArray.filter(
+			(event: any) => event.id !== row.id
+		);
+		setTotalEvents(newTotalArray);
+
 		let rowsClone = [...rows];
 		rowsClone.splice(index, 1);
 		setRows(rowsClone);
@@ -200,16 +235,16 @@ export function EventTable({
 				<td>{convertDateNumberToString(row.endTime)} </td>
 				{user?.customClaims?.admin && (
 					<td>
-					<ActionIcon
-						m={0}
-						p={0}
-						color={"red"}
-						onClick={(event) => {
-							handleEventRemoval(event, row, index, rows, setRows);
-						}}
-					>
-						<IconTrash />
-					</ActionIcon>
+						<ActionIcon
+							m={0}
+							p={0}
+							color={"red"}
+							onClick={(event) => {
+								handleEventRemoval(event, row, index, rows, setRows);
+							}}
+						>
+							<IconTrash />
+						</ActionIcon>
 					</td>
 				)}
 			</tr>
@@ -262,7 +297,11 @@ export function EventTable({
 						>
 							End Date
 						</Th>
-						{user?.customClaims?.admin && <Th sorted={true} reversed={false} onSort={() => {}}>Remove</Th>}
+						{user?.customClaims?.admin && (
+							<Th sorted={true} reversed={false} onSort={() => {}}>
+								Remove
+							</Th>
+						)}
 					</tr>
 				</thead>
 				<tbody>

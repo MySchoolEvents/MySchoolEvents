@@ -157,7 +157,9 @@ export async function getCurrentEvents() {
     event.id = doc.id
     documentArray.push(event)
   });
-  return documentArray;
+
+  const sortedArray = documentArray.sort((a, b) => a.endTime - b.endTime)
+  return sortedArray;
 }
 
 export async function getPastEvents() {
@@ -176,7 +178,9 @@ export async function getPastEvents() {
     documentArray.push(event);
   });
 
-  return documentArray;
+  const sortedArray = documentArray.sort((a, b) => b.startTime - a.startTime)
+
+  return sortedArray;
 }
 
 // delete an event from Firestore
