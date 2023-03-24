@@ -10,29 +10,29 @@ MySchoolEvents offers a range of features that make it a comprehensive event man
 
 - Student sign-up and check-in: Students can sign up and check-in to events using the student app, which provides a simple and user-friendly interface for students to browse events, view event details, and check-in to events.
 
-![Event Dashboard](events.png)
+![Event Dashboard](public/events.png)
 
-![Attend Event](attendevent.png)
+![Attend Event](public/attendevent.png)
 
 - Admin dashboard: The admin dashboard allows administrators to manage and track attendance records, as well as to create, edit and delete events. It also includes data analysis tools such as a dashboard for tracking student points, and generating winners for each quarter based on point accumulation.
 
-![Add Event](addevent.png)
+![Add Event](public/addevent.png)
 
 - Event management: The app allows admins to create, edit and delete events with a variety of details including the event name, location, start and end dates, and confirmation ID for student check-ins. The home page also displays current, upcoming, and past events in a clear and organized way.
 
-![Event ID](eventid.png)
+![Event ID](public/eventid.png)
 
 - Student list: The student list section provides admins with an organized table displaying all students in their organizations, including their avatar, display name, student ID, grade level, and point accumulation. The app includes data analysis tools for tracking student points, generating winners for each quarter, and exporting a CSV file with a spreadsheet report of all student data.
 
-![Student list](students.png)
+![Student list](public/students.png)
 
 - Support chatbot: The app integrates with OpenAI's ChatGPT API to provide intelligent technical support to both students and admins. Using natural language processing, the chatbot can understand a wide range of queries related to the app, such as how to sign up for events, how to generate winners, and how to export student data.
 
-![Chatbot](support.png)
+![Chatbot](public/support.png)
 
 - Firebase backend: The app is built using Firebase, which provides a reliable and secure platform for storing and accessing attendance data, with real-time updates and serverless functions for easy scaling.
 
-![Database](db.png)
+![Database](public/db.png)
 
 - TypeScript and NextJS: The app is built using TypeScript and NextJS, providing a powerful set of tools for building scalable and maintainable web applications, with clear and organized code.
 
