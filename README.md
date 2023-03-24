@@ -45,8 +45,8 @@ To get started with MySchoolEvents, follow these steps:
 4. Run the development server by running `yarn dev`.
 5. Navigate to http://localhost:3000 to view the application.
 6. Add the following environment variables to your .env.local file:
-    - OPENAI_API_KEY: Your OpenAI API key. You can obtain a key by signing up for an account on the [OpenAI](https://openai.com/) website.
-    - FIREBASE_SERVICE_ACCOUNT_KEY: Your Firebase service account key. You can obtain a key by creating a new service account in your Firebase project and downloading the JSON key file.
+    - `OPENAI_API_KEY`: Your OpenAI API key. You can obtain a key by signing up for an account on the [OpenAI](https://openai.com/) website.
+    - `FIREBASE_SERVICE_ACCOUNT_KEY`: Your Firebase service account key. You can obtain a key by creating a new service account in your Firebase project and downloading the JSON key file.
     - Make sure to include these variables in your .env.local file and add the file to your .gitignore file to keep your keys secure.
 
 ## Getting Help
