@@ -21,6 +21,7 @@ MySchoolEvents offers a range of features that make it a comprehensive event man
 
 - Admin dashboard: The admin dashboard allows administrators to manage and track attendance records, as well as to create, edit and delete events. It also includes data analysis tools such as a dashboard for tracking student points, and generating winners for each quarter based on point accumulation.
 
+![Past Events](public/pastevents.png)
 ![Add Event](public/addevent.png)
 
 - Event management: The app allows admins to create, edit and delete events with a variety of details including the event name, location, start and end dates, and confirmation ID for student check-ins. The home page also displays current, upcoming, and past events in a clear and organized way.
