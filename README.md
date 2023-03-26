@@ -14,6 +14,11 @@ MySchoolEvents offers a range of features that make it a comprehensive event man
 
 ![Attend Event](public/attendevent.png)
 
+- Course management: Students are able to create, edit and remove courses that they have in their schedule through the courses page. Our interface provides students with an easy way to quickly view their courses and teachers.
+
+![Courses](public/courses.png)
+![Add Course](public/addcourse.png)
+
 - Admin dashboard: The admin dashboard allows administrators to manage and track attendance records, as well as to create, edit and delete events. It also includes data analysis tools such as a dashboard for tracking student points, and generating winners for each quarter based on point accumulation.
 
 ![Add Event](public/addevent.png)
