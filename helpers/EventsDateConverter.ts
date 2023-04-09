@@ -8,15 +8,9 @@ export const convertDateNumberToString = (dateNum: string | number): string => {
 }
 
 export const getDateNumber = (): number => {
-
-  // march 10 -> 310
-
   const date = new Date();
-
   const month = date.getMonth() + 1;
-
   const day = date.getDate();
-
-  return parseInt(`${month}${day}`)
-
+  const formattedDay = day < 10 ? `0${day}` : day;
+  return parseInt(`${month}${formattedDay}`);
 }
