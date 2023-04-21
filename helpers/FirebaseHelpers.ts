@@ -4,6 +4,7 @@ import {
   getDocs,
   where,
   query,
+  orderBy,
   limit,
   updateDoc,
   arrayUnion,
@@ -44,7 +45,11 @@ export async function getUpcomingEvents() {
   //
   const eventsRef = collection(db, "school-events");
 
-  const q = query(eventsRef, where("startTime", ">", getDateNumber()), limit(30))
+  const q = query(
+    eventsRef, 
+    orderBy("startTime", "asc"),
+    where("startTime", ">", getDateNumber()), 
+    limit(30))
 
   const querySnapshot = await getDocs(q);
 
@@ -167,7 +172,11 @@ export async function getPastEvents() {
   //
   const eventsRef = collection(db, "school-events");
 
-  const q = query(eventsRef, where("startTime", "<", getDateNumber()), limit(30));
+  const q = query(
+    eventsRef, 
+    orderBy("startTime", "desc"),
+    where("startTime", "<", getDateNumber()), 
+    limit(30));
 
   const querySnapshot = await getDocs(q);
   const documentArray: any[] = [];
