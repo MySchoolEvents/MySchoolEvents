@@ -75,6 +75,7 @@ const StudentsContent = ({ students }: any) => {
     // remove avatar
     selectedStudents.forEach((student: any) => {
       delete student.avatar
+      delete student.id
     })
     return selectedStudents
   }
