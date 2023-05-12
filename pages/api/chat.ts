@@ -41,8 +41,7 @@ export default async function handler(
 			},
 		],
 		temperature: 1.0,
-		max_tokens: 100,
-		stop: ".",
+		max_tokens: 750,
 	});
 
 	try {
