@@ -1,7 +1,7 @@
 # MySchoolEvents
-Welcome to MySchoolEvents, a web application designed to track student event attendance. This application is built using TypeScript and NextJS, with a backend implemented in Firebase, Firestore, and Auth.
+Welcome to MySchoolEvents, a web application designed to track student event attendance. This application is built using TypeScript and NextJS, with a backend implemented in Firebase, Firestore, and Auth. This project placed 2nd at the 2023 CAFBLA State Leadership Conference for the Coding & Programming event.
 
-MySchoolEvents provides both a student app and an admin dashboard, allowing for efficient management of student attendance records. The app is intuitive and user-friendly, making it easy for both students and administrators to use.
+MySchoolEvents provides both a student and admin dashboard, allowing for efficient management of student attendance records. The app is intuitive and user-friendly, making it easy for both students and administrators to use.
 
 ## Student Demo
 
