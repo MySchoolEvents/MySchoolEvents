@@ -3,6 +3,14 @@ Welcome to MySchoolEvents, a web application designed to track student event att
 
 MySchoolEvents provides both a student app and an admin dashboard, allowing for efficient management of student attendance records. The app is intuitive and user-friendly, making it easy for both students and administrators to use.
 
+## Student Demo
+
+[![Student Demo Video](https://img.youtube.com/vi/wS-d9JeAleY/maxresdefault.jpg)](https://youtu.be/wS-d9JeAleY)
+
+## Admin Demo
+
+[![Admin Demo Video](https://img.youtube.com/vi/TgIQ7OPk_54/maxresdefault.jpg)](https://youtu.be/TgIQ7OPk_54)
+
 ## Features
 MySchoolEvents has several features that make it a powerful tool for tracking student event attendance, including:
 
