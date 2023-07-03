@@ -29,7 +29,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       props: {
         events: events,
         user: JSON.parse(JSON.stringify(user)),
-        userData: userData
+        userData: JSON.parse(JSON.stringify(userData))
       },
     };
   } catch (err) {
